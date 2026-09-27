@@ -49,6 +49,17 @@ a single JSON document. Empty pages may still contain a continuation cursor.
 | `s3.ListObjectsV2` | `NextContinuationToken` → `ContinuationToken` |
 | `lambda.ListFunctions` | `NextMarker` → `Marker` |
 | `logs.GetLogEvents` with explicit token | `NextForwardToken` → `NextToken` |
+| IAM lists, RDS describes, ElastiCache describes | `Marker` → `Marker` |
+| ELBv2 describes, `route53.ListHostedZones`, `kms.ListKeys` | `NextMarker` → `Marker` |
+| `dynamodb.ListTables` | `LastEvaluatedTableName` → `ExclusiveStartTableName` |
+| `apigateway.GetRestApis` | `Position` → `Position` |
+| Most other new list/describe actions | `NextToken` → `NextToken` (when present) |
+
+Use `aws_discover` to see the exact case-sensitive action names and accepted Go SDK input
+fields. For example, `cloudwatch.DescribeAlarms` is supported; `monitoring.DescribeAlarms`
+is not an alias. The new `cloudwatch.GetMetricStatistics` binding requires `Namespace`,
+`MetricName`, `StartTime`, `EndTime`, and `Period`; AWS also expects `Statistics` or
+`ExtendedStatistics`. `secretsmanager.DescribeSecret` returns metadata, not secret values.
 
 The server does not silently truncate rows or fetch an unbounded number of pages.
 An oversized response fails with guidance to reduce `MaxResults`, `MaxKeys`, `Limit`, filters,

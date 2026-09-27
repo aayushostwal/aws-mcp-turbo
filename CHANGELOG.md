@@ -2,6 +2,8 @@
 
 ## 0.1.1 — Unreleased
 
+- Expanded the typed read allowlist to 30 AWS services and 61 total operations, including
+  STS identity, IAM users, CloudWatch alarms/metrics, RDS instances, and log group discovery.
 - Automated binary-first GitHub and npm publication on stable version tags, using npm OIDC.
 - Main ancestry/version validation, serialized releases, and immutable npm-version guards.
 - Fresh-cache public installation/MCP smoke checks and bounded registry propagation retries.

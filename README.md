@@ -41,21 +41,21 @@ npx -y @ostwal/aws-mcp-turbo@0.1.1 --version
 Use an existing AWS profile. For an SSO profile, authenticate with the AWS CLI first:
 
 ```sh
-aws sso login --profile development
-npx -y @ostwal/aws-mcp-turbo@0.1.1 --profile development --region us-east-1
+aws sso login
+npx -y @ostwal/aws-mcp-turbo@0.1.1 --region us-west-1
 ```
 
 The running server waits for MCP messages on stdin; an idle terminal is expected.
 Connect an MCP client to use it. No AWS credentials are needed for discovery or local tests.
 
-Add this configuration to your client, replacing the profile and region:
+Add this configuration to your client, changing the region if needed:
 
 ```json
 {
   "mcpServers": {
     "aws-turbo": {
       "command": "npx",
-      "args": ["-y", "@ostwal/aws-mcp-turbo@0.1.1", "--profile", "development", "--region", "us-east-1"]
+      "args": ["-y", "@ostwal/aws-mcp-turbo@0.1.1", "--region", "us-west-1"]
     }
   }
 }
@@ -129,10 +129,37 @@ cache lifetime, errors, custom projections, and diagnostic limits.
 | S3 | `ListBuckets`, `ListObjectsV2`, `GetBucketLocation` | — |
 | Lambda | `ListFunctions`, `GetFunctionConfiguration` | `UpdateFunctionConfiguration` |
 | ECS | `ListTasks`, `DescribeTasks` | — |
-| CloudWatch Logs (`logs`) | `GetLogEvents`, `FilterLogEvents` | — |
+| CloudWatch Logs (`logs`) | `GetLogEvents`, `FilterLogEvents`, `DescribeLogGroups`, `DescribeLogStreams` | — |
+| STS | `GetCallerIdentity` | — |
+| IAM | `ListUsers`, `ListRoles` | — |
+| CloudWatch (`cloudwatch`) | `DescribeAlarms`, `GetMetricStatistics` | — |
+| RDS | `DescribeDBInstances`, `DescribeDBClusters` | — |
+| Elastic Load Balancing v2 (`elbv2`) | `DescribeLoadBalancers`, `DescribeTargetGroups` | — |
+| Auto Scaling (`autoscaling`) | `DescribeAutoScalingGroups` | — |
+| EKS | `ListClusters`, `DescribeCluster` | — |
+| CloudFormation | `ListStacks`, `DescribeStacks` | — |
+| Route 53 (`route53`) | `ListHostedZones` | — |
+| DynamoDB | `ListTables`, `DescribeTable` | — |
+| SQS | `ListQueues` | — |
+| SNS | `ListTopics`, `ListSubscriptions` | — |
+| API Gateway (`apigateway`) | `GetRestApis` | — |
+| API Gateway v2 (`apigatewayv2`) | `GetApis` | — |
+| EventBridge (`events`) | `ListRules`, `ListEventBuses` | — |
+| Secrets Manager (`secretsmanager`) | `ListSecrets`, `DescribeSecret` (metadata only) | — |
+| Systems Manager (`ssm`) | `DescribeInstanceInformation`, `DescribeParameters` | — |
+| KMS | `ListKeys`, `DescribeKey` | — |
+| CloudTrail | `DescribeTrails`, `LookupEvents` | — |
+| AWS Backup (`backup`) | `ListBackupVaults`, `ListBackupPlans` | — |
+| ECR | `DescribeRepositories`, `DescribeImages` | — |
+| ElastiCache (`elasticache`) | `DescribeCacheClusters`, `DescribeReplicationGroups` | — |
+| ACM | `ListCertificates`, `DescribeCertificate` | — |
+| Organizations (`organizations`) | `ListAccounts`, `DescribeOrganization` | — |
+| Bedrock (`bedrock`) | `ListFoundationModels`, `ListCustomModels` | — |
 
-This is an explicit allowlist, not a universal AWS API dispatcher. New actions require
-reviewed SDK bindings, safety classification, projections, and tests.
+These 30 services expose 61 reviewed operations, including three opt-in writes. This is an
+explicit action allowlist; it does not expose every API operation in those services.
+`cloudwatch.DescribeAlarms` is the canonical name; `monitoring.DescribeAlarms` is not registered.
+New actions require reviewed SDK bindings, safety classification, projections, and tests.
 
 ## Configuration and safety
 
