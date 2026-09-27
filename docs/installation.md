@@ -62,10 +62,10 @@ release to enable normal stable `brew install aayushostwal/aws-mcp-turbo/aws-mcp
 
 ## npm
 
-Once the scoped package and matching GitHub release are published:
+With Node.js 22+ installed, run:
 
 ```sh
-npx -y @aayushostwal/aws-mcp-turbo@0.1.0 --version
+npx -y @ostwal/aws-mcp-turbo@0.1.0 --version
 ```
 
 The wrapper has no runtime npm dependencies. It requires Node 22+ and downloads the native

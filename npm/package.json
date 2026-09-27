@@ -1,5 +1,5 @@
 {
-  "name": "@aayushostwal/aws-mcp-turbo",
+  "name": "@ostwal/aws-mcp-turbo",
   "version": "0.1.0",
   "description": "Native, token-conscious AWS MCP server with projections and delta log polling",
   "type": "module",

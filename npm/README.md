@@ -1,12 +1,12 @@
-# @aayushostwal/aws-mcp-turbo
+# @ostwal/aws-mcp-turbo
 
 Node launcher for the native [aws-mcp-turbo](https://github.com/aayushostwal/aws-mcp-turbo)
 MCP server. Requires Node 22+, macOS/Linux, and arm64/x64.
 
-After the matching package and GitHub release are published:
+Run without cloning the repository or installing Go:
 
 ```sh
-npx -y @aayushostwal/aws-mcp-turbo@0.1.0 --version
+npx -y @ostwal/aws-mcp-turbo@0.1.0 --version
 ```
 
 Configure an MCP client to launch this command with `--profile <aws-profile> --region <region>`.

@@ -7,8 +7,7 @@ A native Go MCP server that keeps AWS responses small before they reach your age
 Four tools provide discovery, projected reads, diagnostic macros, and explicitly approved writes.
 It runs locally over stdio and uses your normal AWS credential chain.
 
-**Status:** initial implementation. Source installation works; binary releases and the npm package
-become available after a maintainer publishes them. Offline tests cover the protocol, AWS request
+**Status:** initial 0.1 release. Offline tests cover the protocol, AWS request
 encoding, projections, cache behavior, and mutation gates. Live-account and GUI-client certification
 are still release checks. Performance targets are tracked in [benchmarks](docs/benchmarks.md), not advertised as guarantees.
 
@@ -33,17 +32,17 @@ AWS calls still incur network latency and normal AWS charges.
 
 The recommended installation is **npx**, with Node.js 22+ on macOS or Linux (arm64/amd64).
 It downloads a checksum-verified native binary automatically; no Git clone or Go compiler is needed.
-The following command becomes available after the first GitHub release and npm publication:
+Check the installed version:
 
 ```sh
-npx -y @aayushostwal/aws-mcp-turbo@0.1.0 --version
+npx -y @ostwal/aws-mcp-turbo@0.1.0 --version
 ```
 
 Use an existing AWS profile. For an SSO profile, authenticate with the AWS CLI first:
 
 ```sh
 aws sso login --profile development
-npx -y @aayushostwal/aws-mcp-turbo@0.1.0 --profile development --region us-east-1
+npx -y @ostwal/aws-mcp-turbo@0.1.0 --profile development --region us-east-1
 ```
 
 The running server waits for MCP messages on stdin; an idle terminal is expected.
@@ -56,7 +55,7 @@ Add this configuration to your client, replacing the profile and region:
   "mcpServers": {
     "aws-turbo": {
       "command": "npx",
-      "args": ["-y", "@aayushostwal/aws-mcp-turbo@0.1.0", "--profile", "development", "--region", "us-east-1"]
+      "args": ["-y", "@ostwal/aws-mcp-turbo@0.1.0", "--profile", "development", "--region", "us-east-1"]
     }
   }
 }

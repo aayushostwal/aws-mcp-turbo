@@ -49,14 +49,14 @@ For SDK environments that use environment variables instead of flags:
 }
 ```
 
-## npm wrapper (after publication)
+## npm wrapper
 
 ```json
 {
   "mcpServers": {
     "aws-turbo": {
       "command": "npx",
-      "args": ["-y", "@aayushostwal/aws-mcp-turbo@0.1.0", "--profile", "development", "--region", "us-east-1"]
+      "args": ["-y", "@ostwal/aws-mcp-turbo@0.1.0", "--profile", "development", "--region", "us-east-1"]
     }
   }
 }
