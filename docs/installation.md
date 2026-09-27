@@ -13,7 +13,7 @@ make build
 ```
 
 Use the resulting absolute binary path in your MCP client. Alternatively, once a version is
-published, `go install github.com/aayushostwal/aws-mcp-turbo/cmd/aws-mcp-turbo@v0.1.1`
+published, `go install github.com/aayushostwal/aws-mcp-turbo/cmd/aws-mcp-turbo@v0.1.2`
 builds into Go's binary directory; source installs report `dev` unless built with version ldflags.
 
 ## GitHub binary releases
@@ -28,20 +28,20 @@ After a release is published, select your asset from
 | ARM Linux | `linux_arm64` |
 | x86-64 Linux | `linux_amd64` |
 
-Example for Apple Silicon, when `v0.1.1` is available:
+Example for Apple Silicon, when `v0.1.2` is available:
 
 ```sh
-gh release download v0.1.1 --repo aayushostwal/aws-mcp-turbo \
-  --pattern aws-mcp-turbo_v0.1.1_darwin_arm64 --pattern checksums.txt
-shasum -a 256 aws-mcp-turbo_v0.1.1_darwin_arm64
+gh release download v0.1.2 --repo aayushostwal/aws-mcp-turbo \
+  --pattern aws-mcp-turbo_v0.1.2_darwin_arm64 --pattern checksums.txt
+shasum -a 256 aws-mcp-turbo_v0.1.2_darwin_arm64
 ```
 
 Compare the digest with the matching `checksums.txt` entry. Optionally verify provenance:
 
 ```sh
-gh attestation verify aws-mcp-turbo_v0.1.1_darwin_arm64 --repo aayushostwal/aws-mcp-turbo
-chmod +x aws-mcp-turbo_v0.1.1_darwin_arm64
-./aws-mcp-turbo_v0.1.1_darwin_arm64 --version
+gh attestation verify aws-mcp-turbo_v0.1.2_darwin_arm64 --repo aayushostwal/aws-mcp-turbo
+chmod +x aws-mcp-turbo_v0.1.2_darwin_arm64
+./aws-mcp-turbo_v0.1.2_darwin_arm64 --version
 ```
 
 Copy it to an installation directory you control, or use this path directly in your client.
@@ -65,7 +65,7 @@ release to enable normal stable `brew install aayushostwal/aws-mcp-turbo/aws-mcp
 With Node.js 22+ installed, run:
 
 ```sh
-npx -y @ostwal/aws-mcp-turbo@0.1.1 --version
+npx -y @ostwal/aws-mcp-turbo@latest --version
 ```
 
 The wrapper has no runtime npm dependencies. It requires Node 22+ and downloads the native

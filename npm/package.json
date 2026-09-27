@@ -1,6 +1,6 @@
 {
   "name": "@ostwal/aws-mcp-turbo",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Native, token-conscious AWS MCP server with projections and delta log polling",
   "type": "module",
   "bin": { "aws-mcp-turbo": "bin/aws-mcp-turbo.mjs" },
