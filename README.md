@@ -35,14 +35,14 @@ It downloads a checksum-verified native binary automatically; no Git clone or Go
 Check the installed version:
 
 ```sh
-npx -y @ostwal/aws-mcp-turbo@0.1.0 --version
+npx -y @ostwal/aws-mcp-turbo@0.1.1 --version
 ```
 
 Use an existing AWS profile. For an SSO profile, authenticate with the AWS CLI first:
 
 ```sh
 aws sso login --profile development
-npx -y @ostwal/aws-mcp-turbo@0.1.0 --profile development --region us-east-1
+npx -y @ostwal/aws-mcp-turbo@0.1.1 --profile development --region us-east-1
 ```
 
 The running server waits for MCP messages on stdin; an idle terminal is expected.
@@ -55,7 +55,7 @@ Add this configuration to your client, replacing the profile and region:
   "mcpServers": {
     "aws-turbo": {
       "command": "npx",
-      "args": ["-y", "@ostwal/aws-mcp-turbo@0.1.0", "--profile", "development", "--region", "us-east-1"]
+      "args": ["-y", "@ostwal/aws-mcp-turbo@0.1.1", "--profile", "development", "--region", "us-east-1"]
     }
   }
 }
@@ -175,7 +175,9 @@ make bench                 # local CPU/allocation measurements
 
 CI runs on Linux and macOS, scans Go vulnerabilities, checks the schema token budget,
 and exercises a real stdio handshake. Tagged releases build four native binaries,
-SHA-256 checksums, provenance attestations, and a Homebrew formula, then create a draft release.
+SHA-256 checksums, provenance attestations, and a Homebrew formula, then publish GitHub binaries
+followed by npm using trusted publishing. Ordinary pushes only run CI; see the one-time npm
+setup and release-tag procedure in [releasing](docs/releasing.md).
 
 - [Architecture and design decisions](docs/architecture.md)
 - [Benchmarks and acceptance status](docs/benchmarks.md)

@@ -20,6 +20,10 @@ try {
     encoding: 'utf8', timeout: 30000,
   }).trim();
   assert.equal(output, expected, 'npx must launch the binary, not silently exit');
+  execFileSync(process.execPath, ['scripts/stdio-smoke.mjs', '--npm', join(directory, packed[0].filename)], {
+    env: { ...process.env, AWS_MCP_TURBO_BINARY: binary, NPM_CONFIG_CACHE: cache, NPM_CONFIG_OFFLINE: 'true' },
+    stdio: 'inherit', timeout: 30000,
+  });
   console.log(`Packed npm/npx executable smoke passed (${output})`);
 } finally {
   await rm(directory, { recursive: true, force: true });

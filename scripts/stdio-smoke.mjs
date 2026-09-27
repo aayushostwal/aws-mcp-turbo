@@ -1,11 +1,16 @@
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { createInterface } from 'node:readline';
+import { once } from 'node:events';
 
-const child = spawn(process.env.AWS_MCP_TURBO_BINARY || './bin/aws-mcp-turbo', [], {
+const npmSpec = process.argv[2] === '--npm' ? process.argv[3] : null;
+if (process.argv[2] && !npmSpec) throw new Error('Usage: node scripts/stdio-smoke.mjs [--npm package-spec]');
+const child = spawn(npmSpec ? 'npm' : process.env.AWS_MCP_TURBO_BINARY || './bin/aws-mcp-turbo',
+  npmSpec ? ['exec', '--yes', '--package', npmSpec, '--', 'aws-mcp-turbo'] : [], {
   stdio: ['pipe', 'pipe', 'pipe'],
   env: { ...process.env, AWS_EC2_METADATA_DISABLED: 'true' },
 });
+const closed = once(child, 'exit');
 const pending = new Map();
 let stderr = '';
 child.stderr.on('data', chunk => { stderr += chunk; });
@@ -41,6 +46,11 @@ try {
   assert.match(mutation.content[0].text, /disabled/);
   console.log('stdio initialize, tools/list, discover, and mutation denial passed');
 } finally {
-  clearTimeout(timer);
   child.stdin.end();
+  try {
+    const [code] = await closed;
+    assert.equal(code, 0, `Server must shut down cleanly: ${stderr}`);
+  } finally {
+    clearTimeout(timer);
+  }
 }

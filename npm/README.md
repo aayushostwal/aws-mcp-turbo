@@ -6,7 +6,7 @@ MCP server. Requires Node 22+, macOS/Linux, and arm64/x64.
 Run without cloning the repository or installing Go:
 
 ```sh
-npx -y @ostwal/aws-mcp-turbo@0.1.0 --version
+npx -y @ostwal/aws-mcp-turbo@0.1.1 --version
 ```
 
 Configure an MCP client to launch this command with `--profile <aws-profile> --region <region>`.

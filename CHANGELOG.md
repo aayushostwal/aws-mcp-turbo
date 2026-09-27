@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1 — Unreleased
+
+- Automated binary-first GitHub and npm publication on stable version tags, using npm OIDC.
+- Main ancestry/version validation, serialized releases, and immutable npm-version guards.
+- Fresh-cache public installation/MCP smoke checks and bounded registry propagation retries.
+- Documented trusted-publisher setup and recovery without overwriting published versions.
+
 ## 0.1.0 — 2026-09-27
 
 - Native Go stdio MCP server with exactly four compact tools.

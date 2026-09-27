@@ -1,11 +1,11 @@
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { validateRelease } from './release-utils.mjs';
 
 const version = process.argv[2];
-if (!/^v\d+\.\d+\.\d+$/.test(version || '')) throw new Error('Usage: node scripts/release.mjs vX.Y.Z');
 const pkg = JSON.parse(await readFile('npm/package.json', 'utf8'));
-if (`v${pkg.version}` !== version) throw new Error('Tag must match npm/package.json version');
+validateRelease(version, pkg);
 await mkdir('dist', { recursive: true });
 const checksums = [];
 const hashes = {};
