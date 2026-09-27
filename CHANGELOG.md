@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4 — Unreleased
+
+- Added structured discovery results alongside text for MCP clients that consume structured tool output.
+- Added bounded parallel `aws_query.regions` fan-out for the same read action across up to eight regions.
+
 ## 0.1.3 — 2026-09-27
 
 - Added per-query `aws_query.region` override while preserving the configured default.

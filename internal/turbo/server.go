@@ -13,8 +13,8 @@ import (
 // ToolDefinitions deliberately keep action schemas out of the initial context.
 func ToolDefinitions() []*mcp.Tool {
 	definitions := []*mcp.Tool{
-		{Name: "aws_discover", Description: "Find actions, presets, macros; exact action gives params.", InputSchema: json.RawMessage(`{"type":"object","properties":{"search":{"type":"string"}},"additionalProperties":false}`)},
-		{Name: "aws_query", Description: "Read AWS; project and compress one page.", InputSchema: json.RawMessage(`{"type":"object","properties":{"action":{"type":"string"},"params":{"type":"object"},"projection":{"type":"string"},"format":{"type":"string"},"region":{"type":"string"}},"required":["action"],"additionalProperties":false}`)},
+		{Name: "aws_discover", Description: "Find actions, presets, macros; exact action gives params.", InputSchema: json.RawMessage(`{"type":"object","properties":{"search":{"type":"string"}},"additionalProperties":false}`), OutputSchema: json.RawMessage(`{"type":"object"}`)},
+		{Name: "aws_query", Description: "Read AWS; project and compress one page.", InputSchema: json.RawMessage(`{"type":"object","properties":{"action":{"type":"string"},"params":{"type":"object"},"projection":{"type":"string"},"format":{"type":"string"},"region":{"type":"string"},"regions":{"type":"array","items":{"type":"string"},"maxItems":8}},"required":["action"],"additionalProperties":false}`)},
 		{Name: "aws_mutate", Description: "Preview write; execute requires configured approval.", InputSchema: json.RawMessage(`{"type":"object","properties":{"action":{"type":"string"},"params":{"type":"object"},"intent":{"type":"string"},"execute":{"type":"boolean"}},"required":["action","intent"],"additionalProperties":false}`)},
 		{Name: "aws_diagnose", Description: "Run an evidence macro; discover names and params.", InputSchema: json.RawMessage(`{"type":"object","properties":{"macro":{"type":"string"},"params":{"type":"object"}},"required":["macro","params"],"additionalProperties":false}`)},
 	}
@@ -51,7 +51,13 @@ func NewServer(e *Engine, version string) *mcp.Server {
 				text = "Response exceeds output limit; narrow the request."
 				err = fmt.Errorf("output limit exceeded")
 			}
-			return &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: text}}, IsError: err != nil}, nil
+			result := &mcp.CallToolResult{Content: []mcp.Content{&mcp.TextContent{Text: text}}, IsError: err != nil}
+			if tool.Name == "aws_discover" && err == nil {
+				if err := json.Unmarshal([]byte(text), &result.StructuredContent); err != nil {
+					return nil, fmt.Errorf("decode discovery result: %w", err)
+				}
+			}
+			return result, nil
 		})
 	}
 	return s

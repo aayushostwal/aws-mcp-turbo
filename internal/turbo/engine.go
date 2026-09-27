@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/jmespath/go-jmespath"
@@ -17,6 +18,7 @@ type Query struct {
 	Projection string          `json:"projection,omitempty"`
 	Format     string          `json:"format,omitempty"`
 	Region     string          `json:"region,omitempty"`
+	Regions    []string        `json:"regions,omitempty"`
 }
 
 var regionName = regexp.MustCompile(`^[a-z0-9]+(-[a-z0-9]+)*$`)
@@ -36,6 +38,9 @@ func NewEngine(r Registry) *Engine {
 }
 
 func (e *Engine) Query(ctx context.Context, session string, q Query) (string, error) {
+	if len(q.Regions) != 0 {
+		return e.queryRegions(ctx, session, q)
+	}
 	a, err := e.Registry.Find(q.Action)
 	if err != nil {
 		return "", err
@@ -149,13 +154,72 @@ func (e *Engine) Query(ctx context.Context, session string, q Query) (string, er
 	return text, nil
 }
 
+// queryRegions runs the same read against a bounded set of regions and keeps
+// the output ordered as requested, regardless of completion order.
+func (e *Engine) queryRegions(ctx context.Context, session string, q Query) (string, error) {
+	if q.Region != "" || len(q.Regions) > 8 {
+		return "", fmt.Errorf("use region or up to 8 regions, not both")
+	}
+	seen := map[string]bool{}
+	for _, region := range q.Regions {
+		if len(region) > 64 || !regionName.MatchString(region) || seen[region] {
+			return "", fmt.Errorf("regions must contain unique valid AWS regions")
+		}
+		seen[region] = true
+	}
+	ctx, cancel := context.WithTimeout(ctx, e.Timeout)
+	defer cancel()
+	type result struct {
+		text string
+		err  error
+	}
+	results := make([]result, len(q.Regions))
+	limit := make(chan struct{}, 4)
+	var wg sync.WaitGroup
+	for i, region := range q.Regions {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			select {
+			case limit <- struct{}{}:
+				defer func() { <-limit }()
+			case <-ctx.Done():
+				results[i].err = ctx.Err()
+				return
+			}
+			one := q
+			one.Region, one.Regions = region, nil
+			results[i].text, results[i].err = e.Query(ctx, session, one)
+		}()
+	}
+	wg.Wait()
+	var out strings.Builder
+	succeeded := 0
+	for i, region := range q.Regions {
+		out.WriteString("### " + region + "\n")
+		if results[i].err != nil {
+			out.WriteString("Error: " + results[i].err.Error() + "\n")
+		} else {
+			succeeded++
+			out.WriteString(results[i].text + "\n")
+		}
+	}
+	if succeeded == 0 {
+		return "", fmt.Errorf("all regional queries failed:\n%s", out.String())
+	}
+	if succeeded < len(results) {
+		out.WriteString("partial=true\n")
+	}
+	return bounded(out.String(), e.MaxBytes)
+}
+
 func (e *Engine) Discover(search string) (string, error) {
 	type catalog struct {
 		Actions []*Action      `json:"actions"`
 		Macros  map[string]any `json:"macros,omitempty"`
 		Usage   string         `json:"usage"`
 	}
-	c := catalog{Actions: e.Registry.Discover(search), Usage: "action=service.Operation; params use exact Go SDK field names. projection=JMESPath; format=markdown|tsv|json; optional region overrides the server default for this query. One AWS page per query; merge next_params into params and keep region for later pages. logs.GetLogEvents auto-polls per session/region; explicit NextToken bypasses caching. Mutation execute defaults false (local preview); execution requires server opt-in and approval hook."}
+	c := catalog{Actions: e.Registry.Discover(search), Usage: "action=service.Operation; params use exact Go SDK field names. projection=JMESPath; format=markdown|tsv|json; optional region selects one region, or regions fans out to up to 8 regions in parallel. One AWS page per region; merge next_params into params and keep region for later pages. logs.GetLogEvents auto-polls per session/region; explicit NextToken bypasses caching. Mutation execute defaults false (local preview); execution requires server opt-in and approval hook."}
 	for name, spec := range macroCatalog() {
 		if strings.Contains(name, strings.ToLower(search)) || search == "" {
 			if c.Macros == nil {

@@ -90,6 +90,14 @@ Query instances using a built-in projection:
 
 The optional `region` applies only to that query. Without it, the server uses `--region`
 or the SDK's configured default. Log-polling cursors are isolated by region.
+For a read-only fan-out of the same action, use `regions` with up to eight region names:
+
+```json
+{"action":"ec2.DescribeInstances","regions":["us-west-1","ap-south-1"]}
+```
+
+The server queries up to four regions concurrently and labels each result. Individual
+regional failures are reported alongside successful regions.
 
 Example output:
 
@@ -120,6 +128,10 @@ Collect evidence:
 ```json
 {"macro":"lambda_timeout","params":{"FunctionName":"api-handler"}}
 ```
+
+These macros already use bounded conditional/composite reads: `ecs_task_stopped`
+lists tasks only when task IDs are omitted, and `lambda_timeout` fetches configuration
+and logs concurrently. Arbitrary user-defined conditional workflows are not exposed.
 
 The complete [tool reference](docs/tools.md) documents parameter casing, pagination,
 cache lifetime, errors, custom projections, and diagnostic limits.

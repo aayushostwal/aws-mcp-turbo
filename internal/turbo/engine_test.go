@@ -144,6 +144,74 @@ func TestDeltaIsolationAcrossRegions(t *testing.T) {
 	}
 }
 
+func TestQueryFansOutAcrossRegionsConcurrently(t *testing.T) {
+	started := make(chan string, 2)
+	release := make(chan struct{})
+	var once sync.Once
+	defer once.Do(func() { close(release) })
+	a := fakeAction("ec2.DescribeInstances", "Items", func(context.Context, json.RawMessage) (any, error) {
+		return map[string]any{"Items": []any{"default"}}, nil
+	})
+	e := NewEngine(Registry{a.Name: a})
+	e.regionRegistry = func(region string) Registry {
+		regional := fakeAction(a.Name, "Items", func(context.Context, json.RawMessage) (any, error) {
+			started <- region
+			<-release
+			return map[string]any{"Items": []any{region}}, nil
+		})
+		return Registry{a.Name: regional}
+	}
+	type outcome struct {
+		text string
+		err  error
+	}
+	done := make(chan outcome, 1)
+	go func() {
+		text, err := e.Query(context.Background(), "s", Query{Action: a.Name, Regions: []string{"ap-south-1", "us-west-1"}})
+		done <- outcome{text, err}
+	}()
+	for range 2 {
+		select {
+		case <-started:
+		case <-time.After(5 * time.Second):
+			t.Fatal("regional queries did not start in parallel")
+		}
+	}
+	once.Do(func() { close(release) })
+	got := <-done
+	if got.err != nil || !strings.Contains(got.text, "ap-south-1") || !strings.Contains(got.text, "us-west-1") || strings.Index(got.text, "ap-south-1") > strings.Index(got.text, "us-west-1") {
+		t.Fatalf("regional results: %q %v", got.text, got.err)
+	}
+	for _, regions := range [][]string{{"ap-south-1", "ap-south-1"}, {"invalid/region"}, {"a", "b", "c", "d", "e", "f", "g", "h", "i"}} {
+		if _, err := e.Query(context.Background(), "s", Query{Action: a.Name, Regions: regions}); err == nil {
+			t.Fatalf("accepted invalid regions %v", regions)
+		}
+	}
+}
+
+func TestQueryRegionsReportsPartialFailures(t *testing.T) {
+	a := fakeAction("ec2.DescribeInstances", "Items", func(context.Context, json.RawMessage) (any, error) {
+		return nil, errors.New("unused")
+	})
+	e := NewEngine(Registry{a.Name: a})
+	e.regionRegistry = func(region string) Registry {
+		regional := fakeAction(a.Name, "Items", func(context.Context, json.RawMessage) (any, error) {
+			if region == "us-west-1" {
+				return nil, errors.New("access denied")
+			}
+			return map[string]any{"Items": []any{"found"}}, nil
+		})
+		return Registry{a.Name: regional}
+	}
+	got, err := e.Query(context.Background(), "s", Query{Action: a.Name, Regions: []string{"ap-south-1", "us-west-1"}})
+	if err != nil || !strings.Contains(got, "found") || !strings.Contains(got, "access denied") || !strings.Contains(got, "partial=true") {
+		t.Fatalf("partial result: %q %v", got, err)
+	}
+	if _, err := e.Query(context.Background(), "s", Query{Action: a.Name, Regions: []string{"us-west-1"}}); err == nil || !strings.Contains(err.Error(), "access denied") {
+		t.Fatalf("all-failure result: %v", err)
+	}
+}
+
 func TestConcurrentDeltaPolls(t *testing.T) {
 	a := fakeAction("logs.GetLogEvents", "Events", func(_ context.Context, p json.RawMessage) (any, error) {
 		args, _ := parameters(p)

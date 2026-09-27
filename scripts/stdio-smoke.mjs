@@ -41,6 +41,7 @@ try {
   assert.deepEqual(tools.tools.map(t => t.name).sort(), ['aws_diagnose', 'aws_discover', 'aws_mutate', 'aws_query']);
   const discovery = await call('tools/call', { name: 'aws_discover', arguments: { search: 'ec2.DescribeInstances' } });
   assert.ok(discovery.content[0].text.includes('InstanceIds'));
+  assert.ok(discovery.structuredContent.actions.some(action => action.action === 'ec2.DescribeInstances'));
   const mutation = await call('tools/call', { name: 'aws_mutate', arguments: { action: 'ec2.StopInstances', intent: 'smoke', execute: true } });
   assert.equal(mutation.isError, true);
   assert.match(mutation.content[0].text, /disabled/);
