@@ -38,7 +38,8 @@ Forward tokens are more precise than timestamps: multiple valid events share tim
 AWS can return partial/empty pages. The bounded ring stores cursor checkpoints and the greatest
 observed timestamp, not log bodies. Limits prevent unbounded session retention; a new session
 cannot choose another session's cache ID. Fixed lock stripes prevent unbounded lock allocation.
-The key includes canonical query parameters; account and region are fixed for the entire process.
+The key includes canonical query parameters and the effective query region. Credentials/account
+remain configured for the process; `aws_query` may override the region per call.
 
 Cache commits occur after successful rendering, so output errors can be retried without losing
 the page. There is no client acknowledgement transaction, persistent cache, cross-process cache,

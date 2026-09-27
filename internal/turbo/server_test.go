@@ -62,8 +62,16 @@ func TestMCPIntegration(t *testing.T) {
 		if result.IsError != tc.wantError {
 			t.Fatalf("%s: %+v", tc.name, result)
 		}
-		if len(result.Content) != 1 || result.StructuredContent != nil {
-			t.Fatal("duplicated/raw structured payload")
+		if len(result.Content) != 1 {
+			t.Fatal("missing text payload")
+		}
+		if tc.name == "aws_discover" && !tc.wantError {
+			structured, ok := result.StructuredContent.(map[string]any)
+			if !ok || structured["actions"] == nil || structured["usage"] == nil {
+				t.Fatalf("discovery structured payload missing: %+v", result.StructuredContent)
+			}
+		} else if result.StructuredContent != nil {
+			t.Fatal("unexpected structured payload")
 		}
 	}
 }

@@ -1,7 +1,8 @@
 # Tool reference
 
-All results are a single MCP text content block. Errors set `isError:true`.
-Raw SDK responses are never duplicated in `structuredContent`. Default result limit is 32 KiB;
+All results include a single MCP text content block. Discovery also includes the same compact
+catalog in `structuredContent` for clients that consume structured tool output. Errors set
+`isError:true`. Raw SDK responses are never duplicated in `structuredContent`. Default result limit is 32 KiB;
 requests larger than 64 KiB are rejected by the handler. Transport parsing happens before
 that handler limit, so this is intended for a trusted local client, not a public server.
 
@@ -16,7 +17,11 @@ Required fields are listed separately; the AWS SDK/service performs additional v
 ## Queries and projections
 
 Arguments: `action` (required), `params` (object, default `{}`), `projection` (JMESPath override),
-and `format` (`markdown`, `tsv`, or `json`; default Markdown for lists, compact JSON otherwise).
+`format` (`markdown`, `tsv`, or `json`; default Markdown for lists, compact JSON otherwise),
+and optional `region` or `regions`. `region` overrides the server's default for one query;
+`regions` runs the same read in up to eight unique regions with four concurrent requests.
+These two fields cannot be combined. Fan-out results are labeled and remain in request order;
+partial regional errors are shown with `partial=true`, while all failures return a tool error.
 
 Action names are `service.Operation` and case-sensitive. Parameters use **Go SDK field names**:
 `FunctionName`, `LogGroupName`, `InstanceIds`, `Filters`, etc. They are not CLI kebab-case names
@@ -36,9 +41,10 @@ not spreadsheet import. Object roots stay compact JSON in every format.
 
 ## Pagination
 
-Each query issues one API call (plus SDK retries). A returned continuation cursor is appended
+Each region in a query issues one API call (plus SDK retries). A returned continuation cursor is appended
 as `next_params={...}`, outside the projection, so it cannot be accidentally projected away.
-Merge those fields into the same input parameters and call again. `format:"json"` selects the
+Merge those fields into the same input parameters and call again, keeping the same region.
+`format:"json"` selects the
 body format; the complete text result may include the pagination trailer and is not always
 a single JSON document. Empty pages may still contain a continuation cursor.
 
@@ -68,7 +74,7 @@ or projection. The output byte ceiling is a bound, not a fixed token budget.
 ## Delta log polling
 
 Without an explicit `NextToken`, `logs.GetLogEvents` maintains an in-memory cursor keyed by
-the actual MCP session and canonical query parameters. Default `Limit` is 200 and default
+the actual MCP session, effective region, and canonical query parameters. Default `Limit` is 200 and default
 `StartFromHead` is true. Choose `StartTime` to avoid reading the full history. Subsequent
 identical calls advance using the AWS forward token with `StartFromHead:true`.
 

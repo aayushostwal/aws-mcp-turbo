@@ -22,6 +22,15 @@ This npm-side trust entry cannot be established by merging repository files. Con
 before pushing the first automated release tag. Do not add `NPM_TOKEN` or `NODE_AUTH_TOKEN`
 secrets. The publishing job uses GitHub-hosted Ubuntu, `id-token: write`, Node 22 and pinned
 npm 11.20.0. See [npm's trusted publishing instructions](https://docs.npmjs.com/trusted-publishers/).
+The owner can also configure it from a local terminal (npm will require interactive 2FA):
+
+```sh
+npx -y npm@11.20.0 trust github @ostwal/aws-mcp-turbo \
+  --file release.yml --repo aayushostwal/aws-mcp-turbo --allow-publish
+npx -y npm@11.20.0 trust list @ostwal/aws-mcp-turbo
+```
+
+The list must show the exact repository/workflow and permission to run `npm publish`.
 After verifying OIDC publication works, consider restricting traditional publishing tokens in
 npm settings. Never put tokens or one-time codes in a PR.
 
@@ -41,9 +50,9 @@ approval. These are repository-owner settings, not changes this workflow can enf
    ```sh
    git switch main
    git pull --ff-only
-   node scripts/check-release.mjs v0.1.2
-   git tag -a v0.1.2 -m 'aws-mcp-turbo v0.1.2'
-   git push origin v0.1.2
+   node scripts/check-release.mjs v0.1.4
+   git tag -a v0.1.4 -m 'aws-mcp-turbo v0.1.4'
+   git push origin v0.1.4
    ```
 
    Substitute the intended version on future releases. The tagged commit must be reachable
@@ -61,7 +70,7 @@ approval. These are repository-owner settings, not changes this workflow can enf
 6. Verify the workflow is green and run `npx -y @ostwal/aws-mcp-turbo@latest --version` yourself.
    Launch releases one at a time; workflow concurrency prevents overlapping release runs.
 
-For a local artifact build without publishing, run `node scripts/release.mjs v0.1.2` after
+For a local artifact build without publishing, run `node scripts/release.mjs v0.1.4` after
 updating the version. Homebrew remains a separate task: copy the generated formula through a
 PR and validate it before advertising stable installation. Windows, Apple notarization, SBOM
 publication, and remote-proxy performance comparisons remain follow-ups.
