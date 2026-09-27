@@ -9,6 +9,7 @@ cmd/aws-mcp-turbo       Flags, credential configuration, lifecycle, audit/hook w
 internal/turbo/server   Compact schemas, dispatch, MCP text/error boundary
 internal/turbo/registry Explicit allowlist, strict typed inputs, discovery
 internal/turbo/aws      AWS SDK v2 service clients and compiled JMESPath presets
+internal/turbo/aws_extended  Additional reviewed read-only service bindings
 internal/turbo/engine   Read flow, projection, pagination, delta commit
 internal/turbo/format   Recursive pruning and deterministic Markdown/TSV/JSON
 internal/turbo/cache    Bounded session/query cursor rings, TTL/LRU, striped locks
@@ -52,7 +53,7 @@ the core server provides its contract and fail-closed execution, not a desktop a
 
 ## Scope and extension points
 
-The current registry intentionally supports five service clients and fifteen operations.
+The current registry intentionally supports 30 service clients and 61 operations.
 Add actions through typed `bind` calls with projections and explicit read/write classification.
 Avoid broad reflection that makes every SDK method callable. Add meaningful adapter/projection,
 pagination, and authorization tests for each extension.

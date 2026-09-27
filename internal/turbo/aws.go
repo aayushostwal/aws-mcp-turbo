@@ -25,8 +25,11 @@ func AWSRegistry(cfg aws.Config) Registry {
 	bind(r, Action{Name: "ecs.DescribeTasks", Required: []string{"Tasks"}, Projection: "{Tasks:Tasks[].{Arn:TaskArn,Status:LastStatus,StopCode:StopCode,Reason:StoppedReason,Containers:Containers[].{Name:Name,Exit:ExitCode,Reason:Reason}},Failures:Failures}"}, c.DescribeTasks)
 	bind(r, Action{Name: "logs.GetLogEvents", Required: []string{"LogGroupName", "LogStreamName"}, Projection: "Events[].{Time:Timestamp,Message:Message}", TokenOut: "NextForwardToken", TokenIn: "NextToken"}, logs.GetLogEvents)
 	bind(r, Action{Name: "logs.FilterLogEvents", Required: []string{"LogGroupName"}, Projection: "Events[].{Time:Timestamp,Stream:LogStreamName,Message:Message}", TokenOut: "NextToken", TokenIn: "NextToken"}, logs.FilterLogEvents)
+	bind(r, Action{Name: "logs.DescribeLogGroups", Projection: "LogGroups[].{Name:LogGroupName,Arn:Arn,RetentionDays:RetentionInDays,StoredBytes:StoredBytes,Class:LogGroupClass}", TokenOut: "NextToken", TokenIn: "NextToken"}, logs.DescribeLogGroups)
+	bind(r, Action{Name: "logs.DescribeLogStreams", Required: []string{"LogGroupName"}, Projection: "LogStreams[].{Name:LogStreamName,Arn:Arn,LastEvent:LastEventTimestamp,StoredBytes:StoredBytes}", TokenOut: "NextToken", TokenIn: "NextToken"}, logs.DescribeLogStreams)
 	bind(r, Action{Name: "ec2.StartInstances", Write: true, Required: []string{"InstanceIds"}, Projection: "StartingInstances[].{Id:InstanceId,Previous:PreviousState.Name,Current:CurrentState.Name}"}, e.StartInstances)
 	bind(r, Action{Name: "ec2.StopInstances", Write: true, Required: []string{"InstanceIds"}, Projection: "StoppingInstances[].{Id:InstanceId,Previous:PreviousState.Name,Current:CurrentState.Name}"}, e.StopInstances)
 	bind(r, Action{Name: "lambda.UpdateFunctionConfiguration", Write: true, Required: []string{"FunctionName"}, Projection: "{Name:FunctionName,State:State,LastUpdate:LastUpdateStatus,Reason:LastUpdateStatusReason}"}, l.UpdateFunctionConfiguration)
+	bindExtendedAWS(r, cfg)
 	return r
 }
