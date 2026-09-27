@@ -35,14 +35,14 @@ It downloads a checksum-verified native binary automatically; no Git clone or Go
 Check the installed version:
 
 ```sh
-npx -y @ostwal/aws-mcp-turbo@0.1.1 --version
+npx -y @ostwal/aws-mcp-turbo@latest --version
 ```
 
 Use an existing AWS profile. For an SSO profile, authenticate with the AWS CLI first:
 
 ```sh
 aws sso login
-npx -y @ostwal/aws-mcp-turbo@0.1.1 --region us-west-1
+npx -y @ostwal/aws-mcp-turbo@latest --region us-west-1
 ```
 
 The running server waits for MCP messages on stdin; an idle terminal is expected.
@@ -55,7 +55,7 @@ Add this configuration to your client, changing the region if needed:
   "mcpServers": {
     "aws-turbo": {
       "command": "npx",
-      "args": ["-y", "@ostwal/aws-mcp-turbo@0.1.1", "--region", "us-west-1"]
+      "args": ["-y", "@ostwal/aws-mcp-turbo@latest", "--region", "us-west-1"]
     }
   }
 }

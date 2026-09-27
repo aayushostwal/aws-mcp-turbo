@@ -41,9 +41,9 @@ approval. These are repository-owner settings, not changes this workflow can enf
    ```sh
    git switch main
    git pull --ff-only
-   node scripts/check-release.mjs v0.1.1
-   git tag -a v0.1.1 -m 'aws-mcp-turbo v0.1.1'
-   git push origin v0.1.1
+   node scripts/check-release.mjs v0.1.2
+   git tag -a v0.1.2 -m 'aws-mcp-turbo v0.1.2'
+   git push origin v0.1.2
    ```
 
    Substitute the intended version on future releases. The tagged commit must be reachable
@@ -58,16 +58,19 @@ approval. These are repository-owner settings, not changes this workflow can enf
    errors get up to 12 attempts; binary/hash failures fail immediately. Individual requests also
    have timeouts. The smoke covers download/hash verification, four tools, discovery, mutation denial,
    offline cached startup, and clean shutdown. A successful upload alone is not acceptance.
-6. Verify the workflow is green and run `npx -y @ostwal/aws-mcp-turbo@0.1.1 --version` yourself.
+6. Verify the workflow is green and run `npx -y @ostwal/aws-mcp-turbo@latest --version` yourself.
    Launch releases one at a time; workflow concurrency prevents overlapping release runs.
 
-For a local artifact build without publishing, run `node scripts/release.mjs v0.1.1` after
+For a local artifact build without publishing, run `node scripts/release.mjs v0.1.2` after
 updating the version. Homebrew remains a separate task: copy the generated formula through a
 PR and validate it before advertising stable installation. Windows, Apple notarization, SBOM
 publication, and remote-proxy performance comparisons remain follow-ups.
 
 ## Failures and safe retries
 
+- **v0.1.1 partial release:** GitHub binaries exist, but npm publication failed because
+  `setup-node` wrote an empty token-auth placeholder. Do not rerun that tag's old workflow;
+  the corrected workflow is shipped in v0.1.2.
 - **Missing npm trust or authentication failure:** correct the npm publisher values above,
   including direct-publish permission. In GitHub Actions, choose **Re-run failed jobs**, which
   retries npm without re-running the successful binary publication job. Do not use `npm whoami`

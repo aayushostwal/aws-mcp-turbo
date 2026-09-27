@@ -76,6 +76,9 @@ test('workflow keeps tag-only publishing, binary-first ordering, and tokenless a
   const workflow = await readFile(new URL('../../.github/workflows/release.yml', import.meta.url), 'utf8');
   assert.match(workflow, /tags: \['v\*\.\*\.\*'\]/);
   assert.doesNotMatch(workflow, /pull_request:|workflow_dispatch:|secrets\.NPM|--clobber|--draft/);
+  // setup-node's registry-url writes an empty NODE_AUTH_TOKEN placeholder,
+  // which suppresses npm's tokenless trusted-publishing authentication.
+  assert.doesNotMatch(workflow, /registry-url:/);
   assert.match(workflow, /needs: release/);
   assert.match(workflow, /id-token: write/);
   assert.match(workflow, /git merge-base --is-ancestor/);

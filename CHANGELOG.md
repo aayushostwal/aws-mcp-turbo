@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.1.1 — Unreleased
+## 0.1.2 — Unreleased
+
+- Fixed npm OIDC publishing by avoiding the empty token-auth configuration created by
+  `actions/setup-node` when `registry-url` is set without `NODE_AUTH_TOKEN`.
+- Updated npx and MCP examples to follow npm's `latest` dist-tag.
+
+## 0.1.1 — 2026-09-27 (GitHub binaries only)
 
 - Expanded the typed read allowlist to 30 AWS services and 61 total operations, including
   STS identity, IAM users, CloudWatch alarms/metrics, RDS instances, and log group discovery.
@@ -8,6 +14,7 @@
 - Main ancestry/version validation, serialized releases, and immutable npm-version guards.
 - Fresh-cache public installation/MCP smoke checks and bounded registry propagation retries.
 - Documented trusted-publisher setup and recovery without overwriting published versions.
+- npm publication failed; use `0.1.2` or later for npm/npx installation.
 
 ## 0.1.0 — 2026-09-27
 

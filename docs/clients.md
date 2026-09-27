@@ -1,6 +1,7 @@
 # Client configuration
 
-Use an absolute binary path. GUI applications often have a different `PATH` from a terminal.
+The examples use npx so no repository clone is needed. GUI applications can have a different
+`PATH` from a terminal; if `npx` is not found, use its absolute path as `command`.
 The client launches the process and exchanges newline-delimited JSON-RPC over stdin/stdout.
 Application logs go to stderr. Every client-launched process owns its own cache and AWS configuration.
 
@@ -12,8 +13,8 @@ Open Settings → Developer → Edit Config and merge the following entry into `
 {
   "mcpServers": {
     "aws-turbo": {
-      "command": "/absolute/path/to/aws-mcp-turbo",
-      "args": ["--profile", "development", "--region", "us-east-1"]
+      "command": "npx",
+      "args": ["-y", "@ostwal/aws-mcp-turbo@latest", "--region", "us-west-1"]
     }
   }
 }
@@ -43,7 +44,7 @@ For SDK environments that use environment variables instead of flags:
   "mcpServers": {
     "aws-turbo": {
       "command": "/absolute/path/to/aws-mcp-turbo",
-      "env": {"AWS_PROFILE":"development","AWS_REGION":"us-east-1"}
+      "env": {"AWS_REGION":"us-west-1"}
     }
   }
 }
@@ -56,7 +57,7 @@ For SDK environments that use environment variables instead of flags:
   "mcpServers": {
     "aws-turbo": {
       "command": "npx",
-      "args": ["-y", "@ostwal/aws-mcp-turbo@0.1.1", "--region", "us-west-1"]
+      "args": ["-y", "@ostwal/aws-mcp-turbo@latest", "--region", "us-west-1"]
     }
   }
 }
@@ -69,6 +70,7 @@ Use `AWS_MCP_TURBO_BINARY=/absolute/path/to/binary` for offline/local package te
 
 ## Multiple accounts
 
-Create separate server entries (`aws-dev`, `aws-prod`) with separate profiles. Use a read-only
-production role and make each entry's name explicit. A single running process has one fixed
-AWS configuration; tool arguments cannot select another profile or region.
+Create separate server entries (`aws-dev`, `aws-prod`) when your local AWS environment uses
+different credentials. Use a read-only production role and make each entry's name explicit.
+A single running process has one fixed AWS configuration; tool arguments cannot select another
+profile or region.
