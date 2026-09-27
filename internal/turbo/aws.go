@@ -1,6 +1,8 @@
 package turbo
 
 import (
+	"sync"
+
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatchlogs"
 	"github.com/aws/aws-sdk-go-v2/service/ec2"
@@ -8,6 +10,27 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/lambda"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 )
+
+// NewAWSEngine keeps regional SDK clients separate while sharing credentials,
+// retry settings, and all other AWS configuration from the server startup.
+func NewAWSEngine(cfg aws.Config) *Engine {
+	e := NewEngine(AWSRegistry(cfg))
+	e.defaultRegion = cfg.Region
+	var regional sync.Map
+	e.regionRegistry = func(region string) Registry {
+		if region == cfg.Region {
+			return e.Registry
+		}
+		if cached, ok := regional.Load(region); ok {
+			return cached.(Registry)
+		}
+		inRegion := cfg
+		inRegion.Region = region
+		registry, _ := regional.LoadOrStore(region, AWSRegistry(inRegion))
+		return registry.(Registry)
+	}
+	return e
+}
 
 func AWSRegistry(cfg aws.Config) Registry {
 	r := Registry{}

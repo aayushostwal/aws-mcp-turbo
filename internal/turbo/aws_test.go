@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"reflect"
 	"strings"
 	"testing"
 
@@ -37,5 +38,26 @@ func TestAWSAdapterUsesSignedSDKRequest(t *testing.T) {
 	got, err := e.Query(context.Background(), "s", Query{Action: "logs.GetLogEvents", Params: json.RawMessage(`{"LogGroupName":"g","LogStreamName":"s"}`)})
 	if err != nil || !called || !strings.Contains(got, "hello") || strings.Contains(got, "ResultMetadata") {
 		t.Fatalf("%s %v", got, err)
+	}
+}
+
+func TestAWSQueryRegionOverridesSDKEndpoint(t *testing.T) {
+	var hosts []string
+	cfg := aws.Config{Region: "us-west-1", Credentials: aws.CredentialsProviderFunc(func(context.Context) (aws.Credentials, error) {
+		return aws.Credentials{AccessKeyID: "test", SecretAccessKey: "test"}, nil
+	}), HTTPClient: &http.Client{Transport: transportFunc(func(req *http.Request) (*http.Response, error) {
+		hosts = append(hosts, req.URL.Host)
+		return &http.Response{StatusCode: 200, Header: http.Header{"Content-Type": []string{"application/x-amz-json-1.1"}}, Body: io.NopCloser(strings.NewReader(`{"logGroups":[{"logGroupName":"found"}]}`))}, nil
+	})}}
+	e := NewAWSEngine(cfg)
+	for _, region := range []string{"", "ap-south-1", "us-west-1"} {
+		got, err := e.Query(context.Background(), "s", Query{Action: "logs.DescribeLogGroups", Region: region})
+		if err != nil || !strings.Contains(got, "found") {
+			t.Fatalf("region %q: %q %v", region, got, err)
+		}
+	}
+	want := []string{"logs.us-west-1.amazonaws.com", "logs.ap-south-1.amazonaws.com", "logs.us-west-1.amazonaws.com"}
+	if !reflect.DeepEqual(hosts, want) {
+		t.Fatalf("hosts %v, want %v", hosts, want)
 	}
 }

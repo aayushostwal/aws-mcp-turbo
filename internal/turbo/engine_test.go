@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"reflect"
 	"strings"
 	"sync"
 	"testing"
@@ -33,7 +34,7 @@ func TestProjectionAndPagination(t *testing.T) {
 	if err != nil || !strings.Contains(got, `["hidden"]`) {
 		t.Fatalf("override: %q %v", got, err)
 	}
-	for _, q := range []Query{{Action: a.Name, Projection: "["}, {Action: a.Name, Format: "csv"}, {Action: "ec2.DeleteEverything"}, {Action: a.Name, Params: json.RawMessage(`null`)}} {
+	for _, q := range []Query{{Action: a.Name, Projection: "["}, {Action: a.Name, Format: "csv"}, {Action: a.Name, Region: "https://example.com"}, {Action: "ec2.DeleteEverything"}, {Action: a.Name, Params: json.RawMessage(`null`)}} {
 		if _, err := e.Query(context.Background(), "s", q); err == nil {
 			t.Fatalf("accepted invalid request: %+v", q)
 		}
@@ -107,6 +108,39 @@ func TestDeltaIsolationAndFailureAtomicity(t *testing.T) {
 	got, err = e.Query(context.Background(), "one", q)
 	if err != nil || !strings.Contains(got, "next_params=") || calls[4]["NextToken"] != "manual" {
 		t.Fatalf("explicit cursor: %q %v", got, err)
+	}
+}
+
+func TestDeltaIsolationAcrossRegions(t *testing.T) {
+	var calls []string
+	makeAction := func(region string) *Action {
+		a := fakeAction("logs.GetLogEvents", "Events", func(_ context.Context, p json.RawMessage) (any, error) {
+			args, _ := parameters(p)
+			if args["NextToken"] != nil {
+				calls = append(calls, region+":continued")
+			} else {
+				calls = append(calls, region+":first")
+			}
+			return map[string]any{"Events": []any{region}, "NextForwardToken": region + "-next"}, nil
+		})
+		a.TokenOut = "NextForwardToken"
+		return a
+	}
+	defaultAction := makeAction("us-west-1")
+	e := NewEngine(Registry{defaultAction.Name: defaultAction})
+	e.defaultRegion = "us-west-1"
+	e.regionRegistry = func(region string) Registry {
+		a := makeAction(region)
+		return Registry{a.Name: a}
+	}
+	for _, region := range []string{"", "ap-south-1", "", "ap-south-1"} {
+		if _, err := e.Query(context.Background(), "session", Query{Action: defaultAction.Name, Region: region}); err != nil {
+			t.Fatal(err)
+		}
+	}
+	want := []string{"us-west-1:first", "ap-south-1:first", "us-west-1:continued", "ap-south-1:continued"}
+	if !reflect.DeepEqual(calls, want) {
+		t.Fatalf("calls %v, want %v", calls, want)
 	}
 }
 

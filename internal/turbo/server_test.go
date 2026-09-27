@@ -35,6 +35,14 @@ func TestMCPIntegration(t *testing.T) {
 	if len(list.Tools) != 4 {
 		t.Fatalf("tool count %d", len(list.Tools))
 	}
+	for _, tool := range list.Tools {
+		if tool.Name == "aws_query" {
+			encoded, _ := json.Marshal(tool.InputSchema)
+			if !strings.Contains(string(encoded), `"region"`) {
+				t.Fatal("aws_query does not advertise the region argument")
+			}
+		}
+	}
 	for _, tc := range []struct {
 		name      string
 		args      map[string]any

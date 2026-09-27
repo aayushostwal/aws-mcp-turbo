@@ -1,6 +1,11 @@
 # Changelog
 
-## 0.1.2 — Unreleased
+## 0.1.3 — 2026-09-27
+
+- Added per-query `aws_query.region` override while preserving the configured default.
+- Kept CloudWatch log polling cursors isolated by region.
+
+## 0.1.2 — 2026-09-27
 
 - Fixed npm OIDC publishing by avoiding the empty token-auth configuration created by
   `actions/setup-node` when `registry-url` is set without `NODE_AUTH_TOKEN`.

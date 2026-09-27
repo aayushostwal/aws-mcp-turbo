@@ -63,7 +63,7 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("load AWS configuration: %w", err)
 	}
-	e := turbo.NewEngine(turbo.AWSRegistry(cfg))
+	e := turbo.NewAWSEngine(cfg)
 	e.MaxBytes = *maxBytes
 	e.Timeout = *timeout
 	if *enable {

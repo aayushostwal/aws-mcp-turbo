@@ -14,7 +14,7 @@ import (
 func ToolDefinitions() []*mcp.Tool {
 	definitions := []*mcp.Tool{
 		{Name: "aws_discover", Description: "Find actions, presets, macros; exact action gives params.", InputSchema: json.RawMessage(`{"type":"object","properties":{"search":{"type":"string"}},"additionalProperties":false}`)},
-		{Name: "aws_query", Description: "Read AWS; project and compress one page.", InputSchema: json.RawMessage(`{"type":"object","properties":{"action":{"type":"string"},"params":{"type":"object"},"projection":{"type":"string"},"format":{"type":"string"}},"required":["action"],"additionalProperties":false}`)},
+		{Name: "aws_query", Description: "Read AWS; project and compress one page.", InputSchema: json.RawMessage(`{"type":"object","properties":{"action":{"type":"string"},"params":{"type":"object"},"projection":{"type":"string"},"format":{"type":"string"},"region":{"type":"string"}},"required":["action"],"additionalProperties":false}`)},
 		{Name: "aws_mutate", Description: "Preview write; execute requires configured approval.", InputSchema: json.RawMessage(`{"type":"object","properties":{"action":{"type":"string"},"params":{"type":"object"},"intent":{"type":"string"},"execute":{"type":"boolean"}},"required":["action","intent"],"additionalProperties":false}`)},
 		{Name: "aws_diagnose", Description: "Run an evidence macro; discover names and params.", InputSchema: json.RawMessage(`{"type":"object","properties":{"macro":{"type":"string"},"params":{"type":"object"}},"required":["macro","params"],"additionalProperties":false}`)},
 	}

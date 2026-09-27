@@ -85,8 +85,11 @@ Discover EC2 actions:
 Query instances using a built-in projection:
 
 ```json
-{"action":"ec2.DescribeInstances","params":{"Filters":[{"Name":"instance-state-name","Values":["running"]}]}}
+{"action":"ec2.DescribeInstances","region":"ap-south-1","params":{"Filters":[{"Name":"instance-state-name","Values":["running"]}]}}
 ```
+
+The optional `region` applies only to that query. Without it, the server uses `--region`
+or the SDK's configured default. Log-polling cursors are isolated by region.
 
 Example output:
 

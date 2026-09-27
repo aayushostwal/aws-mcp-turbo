@@ -1,6 +1,7 @@
 # Operations and troubleshooting
 
-Run one process per client/profile/region. There is no network listener or daemon management.
+Run one process per client/profile; `aws_query` can override the default region per call.
+There is no network listener or daemon management.
 The client owns process lifecycle; SIGINT/SIGTERM cancel the server. stdout is reserved for MCP.
 Startup errors go to stderr; tool errors are text blocks with `isError:true`.
 
@@ -11,7 +12,7 @@ Startup errors go to stderr; tool errors are text blocks with `isError:true`.
 | Server starts but displays nothing | Normal: stdio waits for a client; use the client or `--version` |
 | Client cannot launch it | Absolute executable path, executable permission, supported OS/architecture |
 | SSO credentials expired | Run `aws sso login --profile <profile>` outside the MCP process |
-| Missing/incorrect region | Set `--region` or SDK region configuration |
+| Missing/incorrect region | Set `aws_query.region` for that call, or `--region` / SDK configuration for the default |
 | Access denied | Verify the intended AWS identity and action/resource IAM grants |
 | Unknown parameter | Discover the exact action; use PascalCase Go SDK field names |
 | Response too large | Reduce page size or filters; narrow projection; use TSV; raise output ceiling if appropriate |

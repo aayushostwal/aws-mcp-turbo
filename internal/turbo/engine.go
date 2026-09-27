@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"regexp"
 	"strings"
 	"time"
 
@@ -15,14 +16,19 @@ type Query struct {
 	Params     json.RawMessage `json:"params,omitempty"`
 	Projection string          `json:"projection,omitempty"`
 	Format     string          `json:"format,omitempty"`
+	Region     string          `json:"region,omitempty"`
 }
 
+var regionName = regexp.MustCompile(`^[a-z0-9]+(-[a-z0-9]+)*$`)
+
 type Engine struct {
-	Registry  Registry
-	Cache     *DeltaCache
-	Mutations *MutationGuard
-	MaxBytes  int
-	Timeout   time.Duration
+	Registry       Registry
+	Cache          *DeltaCache
+	Mutations      *MutationGuard
+	MaxBytes       int
+	Timeout        time.Duration
+	defaultRegion  string
+	regionRegistry func(string) Registry
 }
 
 func NewEngine(r Registry) *Engine {
@@ -36,6 +42,18 @@ func (e *Engine) Query(ctx context.Context, session string, q Query) (string, er
 	}
 	if a.Write {
 		return "", fmt.Errorf("state-changing action requires aws_mutate")
+	}
+	if q.Region != "" {
+		if len(q.Region) > 64 || !regionName.MatchString(q.Region) {
+			return "", fmt.Errorf("invalid AWS region")
+		}
+		if e.regionRegistry == nil {
+			return "", fmt.Errorf("per-query region is unavailable")
+		}
+		a, err = e.regionRegistry(q.Region).Find(q.Action)
+		if err != nil {
+			return "", err
+		}
 	}
 	if err := validFormat(q.Format); err != nil {
 		return "", err
@@ -67,7 +85,11 @@ func (e *Engine) Query(ctx context.Context, session string, q Query) (string, er
 			p["Limit"] = 200
 		}
 		b, _ := json.Marshal(p)
-		key = cacheKey(session, b)
+		region := q.Region
+		if region == "" {
+			region = e.defaultRegion
+		}
+		key = cacheKey(session+"\x00"+region, b)
 		unlock, err := e.Cache.lock(ctx, key)
 		if err != nil {
 			return "", err
@@ -133,7 +155,7 @@ func (e *Engine) Discover(search string) (string, error) {
 		Macros  map[string]any `json:"macros,omitempty"`
 		Usage   string         `json:"usage"`
 	}
-	c := catalog{Actions: e.Registry.Discover(search), Usage: "action=service.Operation; params use exact Go SDK field names. projection=JMESPath; format=markdown|tsv|json. One AWS page per query; merge next_params into params. logs.GetLogEvents auto-polls per session; explicit NextToken bypasses caching. Mutation execute defaults false (local preview); execution requires server opt-in and approval hook."}
+	c := catalog{Actions: e.Registry.Discover(search), Usage: "action=service.Operation; params use exact Go SDK field names. projection=JMESPath; format=markdown|tsv|json; optional region overrides the server default for this query. One AWS page per query; merge next_params into params and keep region for later pages. logs.GetLogEvents auto-polls per session/region; explicit NextToken bypasses caching. Mutation execute defaults false (local preview); execution requires server opt-in and approval hook."}
 	for name, spec := range macroCatalog() {
 		if strings.Contains(name, strings.ToLower(search)) || search == "" {
 			if c.Macros == nil {
