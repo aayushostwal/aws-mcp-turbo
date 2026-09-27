@@ -31,41 +31,40 @@ AWS calls still incur network latency and normal AWS charges.
 
 ## Quick start
 
-Requires the patched Go toolchain declared in `go.mod` for source builds. macOS and Linux,
-arm64 and amd64, are supported.
+The recommended installation is **npx**, with Node.js 22+ on macOS or Linux (arm64/amd64).
+It downloads a checksum-verified native binary automatically; no Git clone or Go compiler is needed.
+The following command becomes available after the first GitHub release and npm publication:
 
 ```sh
-git clone https://github.com/aayushostwal/aws-mcp-turbo.git
-cd aws-mcp-turbo
-make build
-./bin/aws-mcp-turbo --version
+npx -y @aayushostwal/aws-mcp-turbo@0.1.0 --version
 ```
 
 Use an existing AWS profile. For an SSO profile, authenticate with the AWS CLI first:
 
 ```sh
 aws sso login --profile development
-./bin/aws-mcp-turbo --profile development --region us-east-1
+npx -y @aayushostwal/aws-mcp-turbo@0.1.0 --profile development --region us-east-1
 ```
 
 The running server waits for MCP messages on stdin; an idle terminal is expected.
 Connect an MCP client to use it. No AWS credentials are needed for discovery or local tests.
 
-Add this configuration to your client, replacing the binary path and profile:
+Add this configuration to your client, replacing the profile and region:
 
 ```json
 {
   "mcpServers": {
     "aws-turbo": {
-      "command": "/absolute/path/aws-mcp-turbo/bin/aws-mcp-turbo",
-      "args": ["--profile", "development", "--region", "us-east-1"]
+      "command": "npx",
+      "args": ["-y", "@aayushostwal/aws-mcp-turbo@0.1.0", "--profile", "development", "--region", "us-east-1"]
     }
   }
 }
 ```
 
 See [client configuration](docs/clients.md) for Claude Desktop, Cursor, generic stdio clients,
-and npm. See [installation](docs/installation.md) for verified binaries and Homebrew.
+and npm. See [installation](docs/installation.md) for source builds (available now), verified
+binaries, and Homebrew. Using the published npm package does not require an npm account.
 
 ## Four tools
 
@@ -171,6 +170,7 @@ make check                 # tests, vet, formatting, npm wrapper tests
 make race                  # concurrency checks
 make build                 # bin/aws-mcp-turbo
 node scripts/stdio-smoke.mjs
+node scripts/npm-smoke.mjs  # pack and launch through npm's actual executable symlink
 make bench                 # local CPU/allocation measurements
 ```
 

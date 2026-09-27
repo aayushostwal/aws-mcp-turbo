@@ -5,7 +5,8 @@ release or npm package on a branch push. The tag workflow creates a **draft** Gi
 
 1. Finish [operational validation](operations.md), update `CHANGELOG.md`, and set the intended
    version in `npm/package.json`. Stable tags use `vX.Y.Z`.
-2. Run `make check`, `make race`, `make build`, `node scripts/stdio-smoke.mjs`, and token metrics.
+2. Run `make check`, `make race`, `make build`, `node scripts/stdio-smoke.mjs`,
+   `node scripts/npm-smoke.mjs`, and token metrics.
    Run `make vuln` with the pinned Go toolchain. The scanner version is centralized in
    `Makefile`; review it whenever upgrading Go so its analyzer supports the new language version.
 3. Optionally dry-run artifacts with `node scripts/release.mjs v0.1.0` (version must match).
@@ -31,3 +32,21 @@ These repository settings are administrative choices, not files this project can
 The wrapper and release builder reject prerelease version strings for now. Publish stable
 semver versions only or extend both validators with tests. Windows, Apple notarization, SBOM
 publication, automated npm trusted publishing, and remote-proxy latency comparison are follow-ups.
+
+## First npx publication: what the owner needs
+
+- An npm account with permission to publish the public scope `@aayushostwal`. GitHub ownership
+  does not establish ownership of the same npm username/scope. If the npm scope differs, update
+  `npm/package.json` and the installation examples before publication.
+- Authenticate locally with `npm login`, then confirm the account with `npm whoami`.
+  Complete npm's browser/2FA prompts as requested. Do not share tokens or one-time codes in chat.
+- Publish the matching GitHub binary release **first**. The launcher downloads its exact version
+  from that release and cannot work from an unpublished draft.
+- From `npm/`, inspect `npm pack --dry-run`, then publish with `npm publish --access public`.
+  Confirm from a fresh cache that `npx -y @aayushostwal/aws-mcp-turbo@0.1.0 --version` works.
+
+After the initial package exists, [npm trusted publishing](https://docs.npmjs.com/trusted-publishers/)
+can connect a dedicated GitHub publishing workflow through OIDC instead of a stored token.
+That workflow and npm-side trust configuration are not configured by this repository yet.
+End users only need Node.js 22+, a supported OS/architecture, and their AWS configuration;
+they do not need Go, Git, or npm publishing credentials.

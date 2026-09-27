@@ -28,6 +28,7 @@ jobs:
       - run: go test -race -coverprofile=coverage.out ./...
       - run: make build
       - run: node scripts/stdio-smoke.mjs
+      - run: node scripts/npm-smoke.mjs
       - run: npm pack --dry-run
         working-directory: npm
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

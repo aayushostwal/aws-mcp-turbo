@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { createHash, randomUUID } from 'node:crypto';
 import { createReadStream, createWriteStream } from 'node:fs';
-import { chmod, mkdir, readFile, rename, rm } from 'node:fs/promises';
+import { chmod, mkdir, readFile, realpath, rename, rm } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { isAbsolute, join } from 'node:path';
 import { pipeline } from 'node:stream/promises';
@@ -85,6 +85,8 @@ async function main() {
   child.on('exit', (code, signal) => { process.exitCode = code ?? (signal === 'SIGINT' ? 130 : 143); });
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+// npm/npx launch the bin through a symlink; Node resolves import.meta.url but
+// preserves that symlink in argv[1]. Compare canonical paths to run the entrypoint.
+if (process.argv[1] && import.meta.url === pathToFileURL(await realpath(process.argv[1])).href) {
   main().catch(error => { process.stderr.write(`aws-mcp-turbo: ${error.message}\n`); process.exitCode = 1; });
 }
