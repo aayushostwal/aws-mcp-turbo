@@ -6,7 +6,8 @@ release or npm package on a branch push. The tag workflow creates a **draft** Gi
 1. Finish [operational validation](operations.md), update `CHANGELOG.md`, and set the intended
    version in `npm/package.json`. Stable tags use `vX.Y.Z`.
 2. Run `make check`, `make race`, `make build`, `node scripts/stdio-smoke.mjs`, and token metrics.
-   Run `go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 ./...` with the pinned Go toolchain.
+   Run `make vuln` with the pinned Go toolchain. The scanner version is centralized in
+   `Makefile`; review it whenever upgrading Go so its analyzer supports the new language version.
 3. Optionally dry-run artifacts with `node scripts/release.mjs v0.1.0` (version must match).
    This cross-compiles macOS/Linux amd64/arm64, writes SHA-256 sums, and generates a stable
    Homebrew formula. It does not publish anything.

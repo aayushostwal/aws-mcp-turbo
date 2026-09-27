@@ -21,7 +21,7 @@ jobs:
           node-version: '22'
       - run: make check
       - run: go test -race ./...
-      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.1.4 ./...
+      - run: make vuln
       - run: make build
       - run: node scripts/stdio-smoke.mjs
       - run: node scripts/release.mjs "${GITHUB_REF_NAME}"
