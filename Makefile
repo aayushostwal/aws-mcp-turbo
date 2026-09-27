@@ -19,3 +19,4 @@ bench:
 check: test vet
 	test -z "$$(gofmt -l cmd internal)"
 	node --test npm/test/*.test.mjs
+	node --test scripts/test/*.test.mjs

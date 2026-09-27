@@ -1,64 +1,90 @@
 # Maintainer release procedure
 
-The repository includes CI and release automation, but does not automatically publish a public
-release or npm package on a branch push. The tag workflow creates a **draft** GitHub release.
+Ordinary pushes to `main` and pull requests run CI only. After this workflow is merged and npm
+trust is configured, pushing a stable `vX.Y.Z` tag automatically runs the release gates,
+publishes GitHub binaries, then publishes `@ostwal/aws-mcp-turbo` to npm. Merging a version bump
+does **not** create a tag or publish a version. No stored npm token is used.
 
-1. Finish [operational validation](operations.md), update `CHANGELOG.md`, and set the intended
-   version in `npm/package.json`. Stable tags use `vX.Y.Z`.
-2. Run `make check`, `make race`, `make build`, `node scripts/stdio-smoke.mjs`,
-   `node scripts/npm-smoke.mjs`, and token metrics.
-   Run `make vuln` with the pinned Go toolchain. The scanner version is centralized in
-   `Makefile`; review it whenever upgrading Go so its analyzer supports the new language version.
-3. Optionally dry-run artifacts with `node scripts/release.mjs v0.1.0` (version must match).
-   This cross-compiles macOS/Linux amd64/arm64, writes SHA-256 sums, and generates a stable
-   Homebrew formula. It does not publish anything.
-4. Create and push an annotated version tag when authorized; sign it if a maintainer signing
-   key is configured. GitHub Actions checks the code,
-   builds assets, attaches provenance, and creates a draft release. Never move a released tag.
-5. Review the draft's notes and binaries, then publish the GitHub release. Add known limits,
-   benchmark evidence, Go/toolchain details, and the tested client versions.
-6. Copy the generated release `aws-mcp-turbo.rb` to `Formula/aws-mcp-turbo.rb` through a PR.
-   Verify Homebrew on macOS/Linux before advertising stable tap installation.
-7. Publish `npm/` only after the matching GitHub release is public. Configure npm trusted
-   publishing or authenticate as the package owner, inspect `npm pack --dry-run`, and run
-   `npm publish --access public` from `npm/`. No npm token or auto-publishing credential is
-   committed or required by this repository's workflows.
-8. Test `npx -y @ostwal/aws-mcp-turbo@<version> --version` from a clean cache.
+## One-time npm setup (package owner)
 
-GitHub's release workflow requires contents-write, id-token, and attestation permissions;
-ordinary CI has read-only repository permissions. Configure branch protection to require CI,
-review dependency updates, and enable private vulnerability reporting where available.
-These repository settings are administrative choices, not files this project can enforce.
+In [the npm package settings](https://www.npmjs.com/package/@ostwal/aws-mcp-turbo/access),
+add a **GitHub Actions trusted publisher** with these exact values:
 
-The wrapper and release builder reject prerelease version strings for now. Publish stable
-semver versions only or extend both validators with tests. Windows, Apple notarization, SBOM
-publication, automated npm trusted publishing, and remote-proxy latency comparison are follow-ups.
+| Setting | Value |
+| --- | --- |
+| Organization or user | `aayushostwal` (GitHub owner, not the npm username) |
+| Repository | `aws-mcp-turbo` |
+| Workflow filename | `release.yml` (not `.github/workflows/release.yml`) |
+| Environment name | Leave blank; this workflow does not declare an environment |
+| Allowed actions | Enable direct `npm publish`, not only staged publishing |
 
-## First npx publication: what the owner needs
+This npm-side trust entry cannot be established by merging repository files. Configure it
+before pushing the first automated release tag. Do not add `NPM_TOKEN` or `NODE_AUTH_TOKEN`
+secrets. The publishing job uses GitHub-hosted Ubuntu, `id-token: write`, Node 22 and pinned
+npm 11.20.0. See [npm's trusted publishing instructions](https://docs.npmjs.com/trusted-publishers/).
+After verifying OIDC publication works, consider restricting traditional publishing tokens in
+npm settings. Never put tokens or one-time codes in a PR.
 
-- An npm account with permission to publish the public scope `@ostwal`. GitHub ownership
-  does not establish ownership of the same npm username/scope. If the npm scope differs, update
-  `npm/package.json` and the installation examples before publication.
-- Authenticate locally with `npm login`, then confirm the account with `npm whoami`.
-  Complete npm's browser/2FA prompts as requested. Do not share tokens or one-time codes in chat.
-- Publish the matching GitHub binary release **first**. The launcher downloads its exact version
-  from that release and cannot work from an unpublished draft.
-- From `npm/`, inspect `npm pack --dry-run`, then publish with `npm publish --access public`.
-  Confirm from a fresh cache that `npx -y @ostwal/aws-mcp-turbo@0.1.0 --version` works.
+On GitHub, protect `main` with required CI/review and restrict creation/update/deletion of `v*`
+tags to release maintainers. Tags authorize public publication; treat tag creation as a release
+approval. These are repository-owner settings, not changes this workflow can enforce.
 
-After the initial package exists, [npm trusted publishing](https://docs.npmjs.com/trusted-publishers/)
-can connect a dedicated GitHub publishing workflow through OIDC instead of a stored token.
-That workflow and npm-side trust configuration are not configured by this repository yet.
-End users only need Node.js 22+, a supported OS/architecture, and their AWS configuration;
-they do not need Go, Git, or npm publishing credentials.
+## Cut a release
 
-## Recovery
+1. Open a PR updating `npm/package.json`, installation examples, `CHANGELOG.md`, and
+   `docs/releases/vX.Y.Z.md`. Complete the applicable [operational validation](operations.md),
+   and explicitly record remaining acceptance limits in the release notes.
+2. Run `make check`, `make race`, `make vuln`, `make build`, `node scripts/stdio-smoke.mjs`,
+   `node scripts/npm-smoke.mjs`, and token metrics. Review CI and merge the PR.
+3. Pull `main`, check the version, and create an annotated tag (sign it if configured):
 
-For the initial release, disable the MCP client entry and stop its process if acceptance fails;
-there is no previous public version. The stdio smoke test exercises clean process shutdown on
-stdin closure. This stops further requests but does not undo AWS mutations. On later releases,
-pin the last validated npm version in the client configuration and restart the client.
+   ```sh
+   git switch main
+   git pull --ff-only
+   node scripts/check-release.mjs v0.1.1
+   git tag -a v0.1.1 -m 'aws-mcp-turbo v0.1.1'
+   git push origin v0.1.1
+   ```
 
-Do not overwrite published npm versions, Git tags, or binary assets. Deprecate a defective npm
-version with an actionable advisory and publish a corrected patch version after verification.
-Keep the matching GitHub binaries available for users pinned to an existing version.
+   Substitute the intended version on future releases. The tagged commit must be reachable
+   from `main`, the tag must exactly match the package version, and release notes must exist.
+   Stable versions only: no prerelease suffixes, build metadata, or leading zeroes.
+4. Watch the **Release** workflow. It runs tests/race/vulnerability checks, builds all four
+   binaries, verifies hashes and the Linux binary version, attaches attestations, and publishes
+   a public GitHub release with the checked-in release notes.
+5. The dependent npm job tests a locally packed wrapper against that public binary release,
+   then publishes with OIDC and provenance. A final fresh-cache public npm/MCP smoke test waits
+   up to 24 registry lookups, with 10-second waits, for visibility. npm package-index E404/ETARGET
+   errors get up to 12 attempts; binary/hash failures fail immediately. Individual requests also
+   have timeouts. The smoke covers download/hash verification, four tools, discovery, mutation denial,
+   offline cached startup, and clean shutdown. A successful upload alone is not acceptance.
+6. Verify the workflow is green and run `npx -y @ostwal/aws-mcp-turbo@0.1.1 --version` yourself.
+   Launch releases one at a time; workflow concurrency prevents overlapping release runs.
+
+For a local artifact build without publishing, run `node scripts/release.mjs v0.1.1` after
+updating the version. Homebrew remains a separate task: copy the generated formula through a
+PR and validate it before advertising stable installation. Windows, Apple notarization, SBOM
+publication, and remote-proxy performance comparisons remain follow-ups.
+
+## Failures and safe retries
+
+- **Missing npm trust or authentication failure:** correct the npm publisher values above,
+  including direct-publish permission. In GitHub Actions, choose **Re-run failed jobs**, which
+  retries npm without re-running the successful binary publication job. Do not use `npm whoami`
+  as an OIDC test: that command does not use the publishing OIDC exchange.
+- **npm succeeded but verification failed:** re-run failed jobs. The publisher compares the
+  remote version's SHA-512 integrity with a freshly packed tarball; an identical version is
+  skipped and verified again. Conflicting content or lookup/auth/server errors fail closed.
+- **GitHub publication failed or all jobs were re-run:** the workflow will not overwrite an
+  existing release or clobber assets. Inspect the release and workflow logs before proceeding;
+  do not delete/recreate public assets or move a tag to make a rerun pass. An incomplete draft
+  requires maintainer review. If the tagged source needs correction, release a new version.
+- **A newer npm release is already latest:** an unpublished older version is rejected rather
+  than moving `latest` backwards. Never use concurrent/out-of-order tag pushes as a release queue.
+- **Bad released behavior:** pin the last validated version (`0.1.0` for this update) in the MCP
+  client and restart it, or disable the entry. This stops requests but cannot undo AWS writes.
+  Deprecate a defective version with an actionable advisory and publish a separately versioned fix.
+
+Keep matching GitHub binaries available for existing pinned npm versions. Never overwrite
+published npm content, release assets, or Git tags. The scanner version is centralized in
+`Makefile`; review analyzer compatibility whenever upgrading the Go toolchain.

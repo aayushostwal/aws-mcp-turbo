@@ -56,7 +56,7 @@ For SDK environments that use environment variables instead of flags:
   "mcpServers": {
     "aws-turbo": {
       "command": "npx",
-      "args": ["-y", "@ostwal/aws-mcp-turbo@0.1.0", "--profile", "development", "--region", "us-east-1"]
+      "args": ["-y", "@ostwal/aws-mcp-turbo@0.1.1", "--profile", "development", "--region", "us-east-1"]
     }
   }
 }
