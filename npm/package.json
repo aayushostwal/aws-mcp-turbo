@@ -1,0 +1,17 @@
+{
+  "name": "@aayushostwal/aws-mcp-turbo",
+  "version": "0.1.0",
+  "description": "Native, token-conscious AWS MCP server with projections and delta log polling",
+  "type": "module",
+  "bin": { "aws-mcp-turbo": "bin/aws-mcp-turbo.mjs" },
+  "files": ["bin/", "README.md", "LICENSE"],
+  "engines": { "node": ">=22" },
+  "os": ["darwin", "linux"],
+  "cpu": ["arm64", "x64"],
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/aayushostwal/aws-mcp-turbo.git", "directory": "npm" },
+  "homepage": "https://github.com/aayushostwal/aws-mcp-turbo#readme",
+  "bugs": "https://github.com/aayushostwal/aws-mcp-turbo/issues",
+  "publishConfig": { "access": "public" },
+  "scripts": { "test": "node --test test/*.test.mjs" }
+}

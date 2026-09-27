@@ -1,0 +1,56 @@
+[
+  {
+    "action": "ec2.DescribeInstances",
+    "response": {
+      "Reservations": [{"ReservationId":"r-0123456789abcdef0","OwnerId":"123456789012","Groups":[],"Instances":[{
+        "InstanceId":"i-0123456789abcdef0","State":{"Code":16,"Name":"running"},"InstanceType":"t3.medium","PrivateIpAddress":"10.0.1.10",
+        "Tags":[{"Key":"Name","Value":"api"},{"Key":"Environment","Value":"production"},{"Key":"Owner","Value":"platform"}],
+        "Architecture":"x86_64","AmiLaunchIndex":0,"BootMode":"uefi-preferred","CurrentInstanceBootMode":"uefi","EbsOptimized":true,"EnaSupport":true,
+        "Hypervisor":"xen","ImageId":"ami-0123456789abcdef0","KeyName":"example-key","LaunchTime":"2026-01-01T00:00:00Z","PublicDnsName":"","PublicIpAddress":null,
+        "PrivateDnsName":"ip-10-0-1-10.ec2.internal","RootDeviceName":"/dev/xvda","RootDeviceType":"ebs","SourceDestCheck":true,"StateTransitionReason":"",
+        "SubnetId":"subnet-0123456789abcdef0","VpcId":"vpc-0123456789abcdef0","VirtualizationType":"hvm","CpuOptions":{"CoreCount":1,"ThreadsPerCore":2},
+        "Placement":{"AvailabilityZone":"us-east-1a","GroupName":"","Tenancy":"default"},"Monitoring":{"State":"disabled"},
+        "MetadataOptions":{"State":"applied","HttpTokens":"required","HttpPutResponseHopLimit":1,"HttpEndpoint":"enabled","HttpProtocolIpv6":"disabled","InstanceMetadataTags":"disabled"},
+        "NetworkInterfaces":[{"NetworkInterfaceId":"eni-0123456789abcdef0","MacAddress":"00:11:22:33:44:55","PrivateIpAddress":"10.0.1.10","SourceDestCheck":true,"Status":"in-use","SubnetId":"subnet-0123456789abcdef0","VpcId":"vpc-0123456789abcdef0","Groups":[{"GroupId":"sg-0123456789abcdef0","GroupName":"api"}],"PrivateIpAddresses":[{"Primary":true,"PrivateIpAddress":"10.0.1.10","PrivateDnsName":"ip-10-0-1-10.ec2.internal"}]}],
+        "BlockDeviceMappings":[{"DeviceName":"/dev/xvda","Ebs":{"AttachTime":"2026-01-01T00:00:00Z","DeleteOnTermination":true,"Status":"attached","VolumeId":"vol-0123456789abcdef0"}}],
+        "IamInstanceProfile":{"Arn":"arn:aws:iam::123456789012:instance-profile/api","Id":"EXAMPLEPROFILE"},"SecurityGroups":[{"GroupId":"sg-0123456789abcdef0","GroupName":"api"}],"ProductCodes":[],"Licenses":[]
+      }]}],"NextToken":null,"ResultMetadata":{"RequestID":"example-request"}
+    }
+  },
+  {
+    "action":"ec2.DescribeVolumes",
+    "response":{"Volumes":[{"VolumeId":"vol-0123456789abcdef0","State":"in-use","Size":100,"VolumeType":"gp3","AvailabilityZone":"us-east-1a","Attachments":[{"InstanceId":"i-0123456789abcdef0","VolumeId":"vol-0123456789abcdef0","Device":"/dev/xvda","State":"attached","AttachTime":"2026-01-01T00:00:00Z","DeleteOnTermination":true}],"CreateTime":"2026-01-01T00:00:00Z","Encrypted":true,"Iops":3000,"Throughput":125,"KmsKeyId":"arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000","MultiAttachEnabled":false,"SnapshotId":"snap-0123456789abcdef0","FastRestored":false,"Tags":[{"Key":"Owner","Value":"platform"},{"Key":"Environment","Value":"production"}]}],"NextToken":null,"ResultMetadata":{"RequestID":"example-request"}}
+  },
+  {
+    "action":"ec2.DescribeSecurityGroups",
+    "response":{"SecurityGroups":[{"GroupId":"sg-0123456789abcdef0","GroupName":"api","VpcId":"vpc-0123456789abcdef0","Description":"API security group","OwnerId":"123456789012","IpPermissions":[{"FromPort":443,"ToPort":443,"IpProtocol":"tcp","IpRanges":[{"CidrIp":"10.0.0.0/8","Description":"internal"}],"Ipv6Ranges":[],"PrefixListIds":[],"UserIdGroupPairs":[]}],"IpPermissionsEgress":[{"IpProtocol":"-1","IpRanges":[{"CidrIp":"0.0.0.0/0"}],"Ipv6Ranges":[],"PrefixListIds":[],"UserIdGroupPairs":[]}],"Tags":[{"Key":"Environment","Value":"production"}]}],"NextToken":null,"ResultMetadata":{"RequestID":"example-request"}}
+  },
+  {
+    "action":"s3.ListBuckets",
+    "response":{"Buckets":[{"Name":"example-artifacts","CreationDate":"2026-01-01T00:00:00Z","BucketRegion":"us-east-1","BucketArn":"arn:aws:s3:::example-artifacts"},{"Name":"example-logs","CreationDate":"2026-01-02T00:00:00Z","BucketRegion":"us-east-1","BucketArn":"arn:aws:s3:::example-logs"}],"Owner":{"DisplayName":"example","ID":"1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"},"ContinuationToken":null,"Prefix":null,"ResultMetadata":{"RequestID":"example-request"}}
+  },
+  {
+    "action":"s3.ListObjectsV2",
+    "response":{"Name":"example-artifacts","Prefix":"releases/","MaxKeys":1000,"KeyCount":1,"IsTruncated":false,"Contents":[{"Key":"releases/app.zip","Size":1048576,"LastModified":"2026-01-01T00:00:00Z","StorageClass":"STANDARD","ETag":"\"0123456789abcdef0123456789abcdef\"","ChecksumAlgorithm":["SHA256"],"ChecksumType":"FULL_OBJECT","Owner":{"DisplayName":"example","ID":"1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"},"RestoreStatus":null}],"CommonPrefixes":[],"ContinuationToken":null,"NextContinuationToken":null,"Delimiter":null,"EncodingType":"","StartAfter":null,"ResultMetadata":{"RequestID":"example-request"}}
+  },
+  {
+    "action":"lambda.ListFunctions",
+    "response":{"Functions":[{"FunctionName":"api-handler","Runtime":"python3.12","MemorySize":256,"Timeout":30,"LastModified":"2026-01-01T00:00:00Z","FunctionArn":"arn:aws:lambda:us-east-1:123456789012:function:api-handler","Handler":"index.handler","Role":"arn:aws:iam::123456789012:role/api-handler","CodeSize":1048576,"CodeSha256":"exampleHashValue","Description":"Example API handler","Version":"$LATEST","Architectures":["arm64"],"Environment":{"Variables":{"ENVIRONMENT":"production","LOG_LEVEL":"INFO"}},"TracingConfig":{"Mode":"PassThrough"},"EphemeralStorage":{"Size":512},"VpcConfig":{"SubnetIds":["subnet-0123456789abcdef0"],"SecurityGroupIds":["sg-0123456789abcdef0"],"VpcId":"vpc-0123456789abcdef0"},"PackageType":"Zip","Layers":[],"DeadLetterConfig":null,"KMSKeyArn":null,"MasterArn":null}],"NextMarker":null,"ResultMetadata":{"RequestID":"example-request"}}
+  },
+  {
+    "action":"lambda.GetFunctionConfiguration",
+    "response":{"FunctionName":"api-handler","State":"Active","StateReason":null,"Runtime":"python3.12","Timeout":30,"MemorySize":256,"LastUpdateStatus":"Successful","LastUpdateStatusReason":null,"FunctionArn":"arn:aws:lambda:us-east-1:123456789012:function:api-handler","Handler":"index.handler","Role":"arn:aws:iam::123456789012:role/api-handler","CodeSize":1048576,"CodeSha256":"exampleHashValue","Description":"Example API handler","LastModified":"2026-01-01T00:00:00Z","Version":"$LATEST","RevisionId":"00000000-0000-0000-0000-000000000000","Architectures":["arm64"],"Environment":{"Variables":{"ENVIRONMENT":"production","LOG_LEVEL":"INFO"}},"TracingConfig":{"Mode":"PassThrough"},"EphemeralStorage":{"Size":512},"VpcConfig":{"SubnetIds":["subnet-0123456789abcdef0"],"SecurityGroupIds":["sg-0123456789abcdef0"],"VpcId":"vpc-0123456789abcdef0"},"PackageType":"Zip","Layers":[],"DeadLetterConfig":null,"KMSKeyArn":null,"SigningJobArn":null,"SigningProfileVersionArn":null,"ResultMetadata":{"RequestID":"example-request"}}
+  },
+  {
+    "action":"ecs.DescribeTasks",
+    "response":{"Tasks":[{"TaskArn":"arn:aws:ecs:us-east-1:123456789012:task/prod/example","LastStatus":"STOPPED","StopCode":"EssentialContainerExited","StoppedReason":"Essential container in task exited","Containers":[{"Name":"api","ExitCode":137,"Reason":"OutOfMemoryError: Container killed due to memory usage","ContainerArn":"arn:aws:ecs:us-east-1:123456789012:container/prod/example","Image":"123456789012.dkr.ecr.us-east-1.amazonaws.com/api:latest","ImageDigest":"sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","RuntimeId":"example-runtime","LastStatus":"STOPPED","Cpu":"256","Memory":"512","NetworkBindings":[],"NetworkInterfaces":[{"AttachmentId":"example-attachment","PrivateIpv4Address":"10.0.1.5"}],"HealthStatus":"UNKNOWN","ManagedAgents":[]}],"ClusterArn":"arn:aws:ecs:us-east-1:123456789012:cluster/prod","TaskDefinitionArn":"arn:aws:ecs:us-east-1:123456789012:task-definition/api:12","Cpu":"256","Memory":"512","LaunchType":"FARGATE","PlatformVersion":"1.4.0","AvailabilityZone":"us-east-1a","Connectivity":"CONNECTED","ConnectivityAt":"2026-01-01T00:00:00Z","CreatedAt":"2026-01-01T00:00:00Z","StartedAt":"2026-01-01T00:01:00Z","StoppedAt":"2026-01-01T00:10:00Z","DesiredStatus":"STOPPED","EnableExecuteCommand":false,"Group":"service:api","HealthStatus":"UNKNOWN","Overrides":{"ContainerOverrides":[{"Name":"api","Command":[],"Environment":[],"ResourceRequirements":[]}]},"Tags":[],"Attachments":[]}],"Failures":[],"ResultMetadata":{"RequestID":"example-request"}}
+  },
+  {
+    "action":"logs.GetLogEvents",
+    "response":{"Events":[{"Timestamp":1767225600000,"IngestionTime":1767225600100,"Message":"START RequestId: example Version: $LATEST"},{"Timestamp":1767225630000,"IngestionTime":1767225630100,"Message":"Task timed out after 30.00 seconds"}],"NextForwardToken":"f/01234567890123456789012345678901234567890123456789012345","NextBackwardToken":"b/01234567890123456789012345678901234567890123456789012345","ResultMetadata":{"RequestID":"example-request"}}
+  },
+  {
+    "action":"logs.FilterLogEvents",
+    "response":{"Events":[{"Timestamp":1767225630000,"IngestionTime":1767225630100,"Message":"Task timed out after 30.00 seconds","LogStreamName":"2026/01/01/[$LATEST]example","EventId":"01234567890123456789012345678901234567890123456789012345"}],"SearchedLogStreams":[{"LogStreamName":"2026/01/01/[$LATEST]example","SearchedCompletely":true}],"NextToken":null,"ResultMetadata":{"RequestID":"example-request"}}
+  }
+]

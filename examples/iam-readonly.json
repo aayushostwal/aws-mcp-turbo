@@ -1,0 +1,41 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DescribeCompute",
+      "Effect": "Allow",
+      "Action": ["ec2:DescribeInstances", "ec2:DescribeVolumes", "ec2:DescribeSecurityGroups"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ListCatalogs",
+      "Effect": "Allow",
+      "Action": ["s3:ListAllMyBuckets", "lambda:ListFunctions", "ecs:ListTasks"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ReadSelectedBucket",
+      "Effect": "Allow",
+      "Action": ["s3:ListBucket", "s3:GetBucketLocation"],
+      "Resource": "arn:aws:s3:::REPLACE_BUCKET"
+    },
+    {
+      "Sid": "DescribeSelectedFunctions",
+      "Effect": "Allow",
+      "Action": "lambda:GetFunctionConfiguration",
+      "Resource": "arn:aws:lambda:REPLACE_REGION:REPLACE_ACCOUNT:function:REPLACE_FUNCTION"
+    },
+    {
+      "Sid": "DescribeSelectedTasks",
+      "Effect": "Allow",
+      "Action": "ecs:DescribeTasks",
+      "Resource": "arn:aws:ecs:REPLACE_REGION:REPLACE_ACCOUNT:task/REPLACE_CLUSTER/*"
+    },
+    {
+      "Sid": "ReadSelectedLogs",
+      "Effect": "Allow",
+      "Action": ["logs:GetLogEvents", "logs:FilterLogEvents"],
+      "Resource": "arn:aws:logs:REPLACE_REGION:REPLACE_ACCOUNT:log-group:REPLACE_LOG_GROUP:*"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+/bin/
+/dist/
+/coverage.out
+*.test
+*.prof
+*.jsonl
+.DS_Store
+node_modules/
+.venv/
+__pycache__/
+*.tgz

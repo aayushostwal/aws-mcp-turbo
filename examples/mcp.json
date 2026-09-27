@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "aws-turbo": {
+      "command": "/absolute/path/to/aws-mcp-turbo",
+      "args": ["--profile", "development", "--region", "us-east-1"]
+    }
+  }
+}
