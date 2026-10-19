@@ -17,6 +17,7 @@ import (
 type Mutation struct {
 	Action  string          `json:"action"`
 	Params  json.RawMessage `json:"params,omitempty"`
+	Region  string          `json:"region,omitempty"`
 	Intent  string          `json:"intent"`
 	Execute bool            `json:"execute,omitempty"`
 }
@@ -128,12 +129,17 @@ func (e *Engine) Mutate(ctx context.Context, session string, m Mutation) (string
 	if strings.TrimSpace(m.Intent) == "" {
 		return "", fmt.Errorf("intent is required")
 	}
-	a, err := e.Registry.Find(m.Action)
+	a, err := e.find(m.Action)
 	if err != nil {
 		return "", err
 	}
 	if !a.Write {
 		return "", fmt.Errorf("read-only action requires aws_query")
+	}
+	if m.Region != "" {
+		if err := validRegion(m.Region); err != nil {
+			return "", err
+		}
 	}
 	p, err := parameters(m.Params)
 	if err != nil {
@@ -174,7 +180,8 @@ func (e *Engine) Mutate(ctx context.Context, session string, m Mutation) (string
 	if err := g.log(approved); err != nil {
 		return "", err
 	}
-	raw, callErr := a.Call(ctx, m.Params)
+	raw, callErr := a.Call(withRegion(ctx, m.Region), m.Params)
+	e.reads.clear()
 	record["status"] = "completed"
 	if callErr != nil {
 		record["status"] = "aws_error"
@@ -191,7 +198,7 @@ func (e *Engine) Mutate(ctx context.Context, session string, m Mutation) (string
 	if err != nil {
 		return "", fmt.Errorf("AWS call succeeded but projection failed; verify state before retrying: %w", err)
 	}
-	text, err := Format(projected, "", e.MaxBytes)
+	text, err := Format(projected, "compact", e.MaxBytes)
 	if err != nil {
 		return "", fmt.Errorf("AWS call succeeded but output failed; verify state before retrying: %w", err)
 	}

@@ -2,40 +2,60 @@
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "DescribeCompute",
+      "Sid": "ReadMetadataAcrossServices",
       "Effect": "Allow",
-      "Action": ["ec2:DescribeInstances", "ec2:DescribeVolumes", "ec2:DescribeSecurityGroups"],
+      "Action": [
+        "acm:Describe*", "acm:List*",
+        "apigateway:GET",
+        "autoscaling:Describe*",
+        "backup:Describe*", "backup:List*",
+        "budgets:Describe*", "budgets:View*",
+        "ce:Get*", "ce:List*", "ce:Describe*",
+        "cloudformation:Describe*", "cloudformation:List*", "cloudformation:Get*",
+        "cloudfront:Get*", "cloudfront:List*",
+        "cloudtrail:Describe*", "cloudtrail:Get*", "cloudtrail:List*", "cloudtrail:LookupEvents",
+        "cloudwatch:Describe*", "cloudwatch:Get*", "cloudwatch:List*",
+        "config:Describe*", "config:Get*", "config:List*",
+        "dynamodb:Describe*", "dynamodb:List*",
+        "ec2:Describe*", "ec2:Get*",
+        "ecr:Describe*", "ecr:List*",
+        "ecs:Describe*", "ecs:List*",
+        "eks:Describe*", "eks:List*",
+        "elasticache:Describe*", "elasticache:List*",
+        "elasticloadbalancing:Describe*",
+        "events:Describe*", "events:List*",
+        "guardduty:Get*", "guardduty:List*", "guardduty:Describe*",
+        "iam:Get*", "iam:List*", "iam:Simulate*",
+        "kms:Describe*", "kms:List*", "kms:Get*",
+        "lambda:Get*", "lambda:List*",
+        "logs:Describe*", "logs:Get*", "logs:FilterLogEvents", "logs:StartQuery", "logs:GetQueryResults",
+        "organizations:Describe*", "organizations:List*",
+        "rds:Describe*", "rds:List*",
+        "route53:Get*", "route53:List*",
+        "s3:GetBucket*", "s3:ListAllMyBuckets", "s3:ListBucket",
+        "securityhub:Get*", "securityhub:List*", "securityhub:Describe*",
+        "sns:Get*", "sns:List*",
+        "sqs:Get*", "sqs:List*",
+        "ssm:Describe*", "ssm:List*",
+        "states:Describe*", "states:List*",
+        "sts:GetCallerIdentity",
+        "tag:Get*"
+      ],
       "Resource": "*"
     },
     {
-      "Sid": "ListCatalogs",
-      "Effect": "Allow",
-      "Action": ["s3:ListAllMyBuckets", "lambda:ListFunctions", "ecs:ListTasks"],
+      "Sid": "NeverReadSecretsOrCode",
+      "Effect": "Deny",
+      "Action": [
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:BatchGetSecretValue",
+        "ssm:GetParameter*",
+        "kms:Decrypt",
+        "ec2:GetPasswordData",
+        "lambda:GetFunction",
+        "s3:GetObject*"
+      ],
       "Resource": "*"
-    },
-    {
-      "Sid": "ReadSelectedBucket",
-      "Effect": "Allow",
-      "Action": ["s3:ListBucket", "s3:GetBucketLocation"],
-      "Resource": "arn:aws:s3:::REPLACE_BUCKET"
-    },
-    {
-      "Sid": "DescribeSelectedFunctions",
-      "Effect": "Allow",
-      "Action": "lambda:GetFunctionConfiguration",
-      "Resource": "arn:aws:lambda:REPLACE_REGION:REPLACE_ACCOUNT:function:REPLACE_FUNCTION"
-    },
-    {
-      "Sid": "DescribeSelectedTasks",
-      "Effect": "Allow",
-      "Action": "ecs:DescribeTasks",
-      "Resource": "arn:aws:ecs:REPLACE_REGION:REPLACE_ACCOUNT:task/REPLACE_CLUSTER/*"
-    },
-    {
-      "Sid": "ReadSelectedLogs",
-      "Effect": "Allow",
-      "Action": ["logs:GetLogEvents", "logs:FilterLogEvents"],
-      "Resource": "arn:aws:logs:REPLACE_REGION:REPLACE_ACCOUNT:log-group:REPLACE_LOG_GROUP:*"
     }
   ]
 }

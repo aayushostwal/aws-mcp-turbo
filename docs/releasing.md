@@ -50,9 +50,9 @@ approval. These are repository-owner settings, not changes this workflow can enf
    ```sh
    git switch main
    git pull --ff-only
-   node scripts/check-release.mjs v0.1.4
-   git tag -a v0.1.4 -m 'aws-mcp-turbo v0.1.4'
-   git push origin v0.1.4
+   node scripts/check-release.mjs v0.2.0
+   git tag -a v0.2.0 -m 'aws-mcp-turbo v0.2.0'
+   git push origin v0.2.0
    ```
 
    Substitute the intended version on future releases. The tagged commit must be reachable
@@ -65,12 +65,12 @@ approval. These are repository-owner settings, not changes this workflow can enf
    then publishes with OIDC and provenance. A final fresh-cache public npm/MCP smoke test waits
    up to 24 registry lookups, with 10-second waits, for visibility. npm package-index E404/ETARGET
    errors get up to 12 attempts; binary/hash failures fail immediately. Individual requests also
-   have timeouts. The smoke covers download/hash verification, four tools, discovery, mutation denial,
+   have timeouts. The smoke covers download/hash verification, three tools, discovery, mutation denial,
    offline cached startup, and clean shutdown. A successful upload alone is not acceptance.
 6. Verify the workflow is green and run `npx -y @ostwal/aws-mcp-turbo@latest --version` yourself.
    Launch releases one at a time; workflow concurrency prevents overlapping release runs.
 
-For a local artifact build without publishing, run `node scripts/release.mjs v0.1.4` after
+For a local artifact build without publishing, run `node scripts/release.mjs v0.2.0` after
 updating the version. Homebrew remains a separate task: copy the generated formula through a
 PR and validate it before advertising stable installation. Windows, Apple notarization, SBOM
 publication, and remote-proxy performance comparisons remain follow-ups.

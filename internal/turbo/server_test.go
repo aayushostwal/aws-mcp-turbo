@@ -32,7 +32,7 @@ func TestMCPIntegration(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(list.Tools) != 4 {
+	if len(list.Tools) != 3 {
 		t.Fatalf("tool count %d", len(list.Tools))
 	}
 	for _, tool := range list.Tools {
@@ -53,7 +53,7 @@ func TestMCPIntegration(t *testing.T) {
 		{"aws_query", map[string]any{"action": "test.Read", "unknown": true}, true},
 		{"aws_query", map[string]any{"action": "test.Read", "projection": "["}, true},
 		{"aws_mutate", map[string]any{"action": "test.Write", "intent": "test", "execute": true}, true},
-		{"aws_diagnose", map[string]any{"macro": "missing", "params": map[string]any{}}, true},
+		{"aws_query", map[string]any{"macro": "missing", "params": map[string]any{}}, true},
 	} {
 		result, err := cs.CallTool(ctx, &mcp.CallToolParams{Name: tc.name, Arguments: tc.args})
 		if err != nil {

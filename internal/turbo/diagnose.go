@@ -9,10 +9,14 @@ import (
 )
 
 func macroCatalog() map[string]any {
-	return map[string]any{
+	m := map[string]any{
 		"ecs_task_stopped": map[string]any{"params": []string{"Cluster (required)", "Tasks (optional array; up to 100)"}, "description": "Inspect stop reasons, container exit codes and AWS failures; lists stopped tasks if Tasks omitted."},
 		"lambda_timeout":   map[string]any{"params": []string{"FunctionName (required)", "LogGroupName (optional)", "StartTime (optional epoch milliseconds)"}, "description": "Fetch function configuration and recent timeout evidence (last hour by default)."},
 	}
+	for name, r := range recipes {
+		m[name] = map[string]any{"params": r.describeParams(), "description": r.Description}
+	}
+	return m
 }
 
 func (e *Engine) Diagnose(ctx context.Context, session, macro string, params json.RawMessage) (string, error) {
@@ -32,7 +36,10 @@ func (e *Engine) Diagnose(ctx context.Context, session, macro string, params jso
 		}
 		pagination := ""
 		if len(p.Tasks) == 0 {
-			a, _ := e.Registry.Find("ecs.ListTasks")
+			a, err := e.find("ecs.ListTasks")
+			if err != nil {
+				return "", err
+			}
 			raw, err := a.Call(ctx, mustJSON(map[string]any{"Cluster": p.Cluster, "DesiredStatus": "STOPPED", "MaxResults": 100}))
 			if err != nil {
 				return "", err
@@ -124,6 +131,9 @@ func (e *Engine) Diagnose(ctx context.Context, session, macro string, params jso
 		}
 		return bounded(out.String(), e.MaxBytes)
 	default:
+		if r, ok := recipes[macro]; ok {
+			return e.runRecipe(ctx, session, r, params)
+		}
 		return "", fmt.Errorf("unknown macro; use aws_discover")
 	}
 }

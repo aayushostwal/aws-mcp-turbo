@@ -5,6 +5,7 @@ import { chmod, mkdir, readFile, realpath, rename, rm } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { isAbsolute, join } from 'node:path';
 import { pipeline } from 'node:stream/promises';
+import { createGunzip } from 'node:zlib';
 import { Transform } from 'node:stream';
 import { spawn } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
@@ -65,7 +66,21 @@ export async function binaryPath() {
     await download(`${base}/checksums.txt`, temporarySums, 65536);
     const checksums = await readFile(temporarySums, 'utf8');
     const expected = checksumFor(checksums, name);
-    await download(`${base}/${name}`, temporary, 200 * 1024 * 1024);
+    // The binary is large, so the release carries a gzip copy with its own checksum.
+    const expectedGzip = checksumFor(checksums, `${name}.gz`);
+    const compressed = temporary + '.gz';
+    try {
+      await download(`${base}/${name}.gz`, compressed, 200 * 1024 * 1024);
+      if (await digest(compressed) !== expectedGzip) throw new Error('Compressed binary SHA-256 verification failed');
+      let size = 0;
+      const limit = new Transform({ transform(chunk, _, callback) {
+        size += chunk.length;
+        callback(size > 512 * 1024 * 1024 ? new Error('Binary exceeds size limit') : null, chunk);
+      }});
+      await pipeline(createReadStream(compressed), createGunzip(), limit, createWriteStream(temporary, { flags: 'wx', mode: 0o600 }));
+    } finally {
+      await rm(compressed, { force: true });
+    }
     if (await digest(temporary) !== expected) throw new Error('Binary SHA-256 verification failed');
     await chmod(temporary, 0o700);
     await rename(temporary, target);

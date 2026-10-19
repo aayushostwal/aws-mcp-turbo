@@ -23,7 +23,7 @@ func TestPrune(t *testing.T) {
 
 func TestFormats(t *testing.T) {
 	rows := []any{map[string]any{"b": false, "a": "x|y\tz\nnext\\"}, map[string]any{"a": "other", "c": 0}}
-	md, err := Format(rows, "", 32768)
+	md, err := Format(rows, "markdown", 32768)
 	if err != nil || !strings.HasPrefix(md, "|a|b|c|\n|---|---|---|") || !strings.Contains(md, `x\|y\tz\nnext\\`) {
 		t.Fatalf("%q %v", md, err)
 	}
@@ -41,7 +41,7 @@ func TestFormats(t *testing.T) {
 	if s, _ := Format([]any{}, "", 100); s != "No results." {
 		t.Fatal(s)
 	}
-	if s, _ := Format([]any{"a", "b"}, "", 100); !strings.Contains(s, "|Value|") {
+	if s, _ := Format([]any{"a", "b"}, "markdown", 100); !strings.Contains(s, "|Value|") {
 		t.Fatal(s)
 	}
 }
@@ -68,6 +68,7 @@ func BenchmarkQueryPipeline(b *testing.B) {
 	a := fakeAction("ec2.DescribeInstances", "Instances[].{Id:InstanceId,State:State.Name,IP:PrivateIpAddress}", func(context.Context, json.RawMessage) (any, error) { return map[string]any{"Instances": rows}, nil })
 	a.expression = jmespath.MustCompile(a.Projection)
 	e := NewEngine(Registry{a.Name: a})
+	e.DisableReadCache()
 	e.MaxBytes = 1024 * 1024
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -85,7 +86,7 @@ func FuzzFormat(f *testing.F) {
 		if json.Unmarshal([]byte(s), &v) != nil {
 			return
 		}
-		for _, format := range []string{"markdown", "tsv", "json"} {
+		for _, format := range []string{"", "markdown", "tsv", "json"} {
 			result, err := Format(v, format, 4096)
 			if err == nil && len(result) > 4096 {
 				t.Fatal("limit exceeded")

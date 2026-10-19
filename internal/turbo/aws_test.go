@@ -34,7 +34,7 @@ func TestAWSAdapterUsesSignedSDKRequest(t *testing.T) {
 		}
 		return &http.Response{StatusCode: 200, Header: http.Header{"Content-Type": []string{"application/x-amz-json-1.1"}}, Body: io.NopCloser(strings.NewReader(`{"events":[{"timestamp":42,"message":"hello"}],"nextForwardToken":"f/1","nextBackwardToken":"b/1"}`))}, nil
 	})}}
-	e := NewEngine(AWSRegistry(cfg))
+	e := NewAWSEngine(cfg)
 	got, err := e.Query(context.Background(), "s", Query{Action: "logs.GetLogEvents", Params: json.RawMessage(`{"LogGroupName":"g","LogStreamName":"s"}`)})
 	if err != nil || !called || !strings.Contains(got, "hello") || strings.Contains(got, "ResultMetadata") {
 		t.Fatalf("%s %v", got, err)
@@ -50,6 +50,7 @@ func TestAWSQueryRegionOverridesSDKEndpoint(t *testing.T) {
 		return &http.Response{StatusCode: 200, Header: http.Header{"Content-Type": []string{"application/x-amz-json-1.1"}}, Body: io.NopCloser(strings.NewReader(`{"logGroups":[{"logGroupName":"found"}]}`))}, nil
 	})}}
 	e := NewAWSEngine(cfg)
+	e.reads = nil // every call must reach the SDK
 	for _, region := range []string{"", "ap-south-1", "us-west-1"} {
 		got, err := e.Query(context.Background(), "s", Query{Action: "logs.DescribeLogGroups", Region: region})
 		if err != nil || !strings.Contains(got, "found") {

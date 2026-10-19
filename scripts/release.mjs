@@ -1,5 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { validateRelease } from './release-utils.mjs';
 
@@ -17,6 +18,9 @@ for (const os of ['darwin', 'linux']) {
     });
     const hash = createHash('sha256').update(await readFile(`dist/${name}`)).digest('hex');
     checksums.push(`${hash}  ${name}`);
+    const packed = gzipSync(await readFile(`dist/${name}`), { level: 9 });
+    await writeFile(`dist/${name}.gz`, packed);
+    checksums.push(`${createHash('sha256').update(packed).digest('hex')}  ${name}.gz`);
     hashes[`${os}_${arch}`] = hash;
   }
 }
@@ -48,4 +52,4 @@ ${['arm', 'intel'].map(cpu => {
 end
 `;
 await writeFile('dist/aws-mcp-turbo.rb', formula);
-console.log(`Built ${checksums.length} binaries, SHA-256 checksums, and Homebrew formula for ${version}`);
+console.log(`Built ${checksums.length / 2} binaries (raw and gzip), SHA-256 checksums, and Homebrew formula for ${version}`);

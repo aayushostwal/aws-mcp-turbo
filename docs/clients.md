@@ -21,7 +21,7 @@ Open Settings → Developer → Edit Config and merge the following entry into `
 ```
 
 On macOS this is normally `~/Library/Application Support/Claude/claude_desktop_config.json`.
-Restart the client, verify four tools appear, and ask it to discover EC2 actions.
+Restart the client, verify three tools appear, and ask it to discover EC2 actions.
 Configuration follows the [MCP local-server guide](https://github.com/modelcontextprotocol/docs/blob/main/quickstart/user.mdx).
 The project tests generic MCP interoperability; each GUI version still needs a manual smoke test.
 
