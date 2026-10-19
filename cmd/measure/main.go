@@ -26,17 +26,19 @@ func run() error {
 	}
 	var fixtures []struct {
 		Action   string `json:"action"`
+		Label    string `json:"label"`
 		Response any    `json:"response"`
 	}
 	if err := json.Unmarshal(b, &fixtures); err != nil {
 		return err
 	}
-	e := turbo.NewEngine(turbo.AWSRegistry(aws.Config{}))
+	e := turbo.NewAWSEngine(aws.Config{Region: "us-west-1"})
+	e.DisableReadCache()
 	var results []map[string]any
 	for _, f := range fixtures {
-		a := e.Registry[f.Action]
-		if a == nil {
-			return fmt.Errorf("unknown fixture action %s", f.Action)
+		a, err := e.Action(f.Action)
+		if err != nil {
+			return fmt.Errorf("unknown fixture action %s: %w", f.Action, err)
 		}
 		a.Call = func(context.Context, json.RawMessage) (any, error) { return f.Response, nil }
 		a.Validate = nil
@@ -45,7 +47,11 @@ func run() error {
 			return err
 		}
 		raw, _ := json.Marshal(f.Response)
-		results = append(results, map[string]any{"action": f.Action, "raw": string(raw), "compressed": out})
+		label := f.Label
+		if label == "" {
+			label = f.Action
+		}
+		results = append(results, map[string]any{"action": label, "raw": string(raw), "compressed": out})
 	}
 	return json.NewEncoder(os.Stdout).Encode(results)
 }

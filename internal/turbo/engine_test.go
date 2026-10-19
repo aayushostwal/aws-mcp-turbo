@@ -42,27 +42,26 @@ func TestProjectionAndPagination(t *testing.T) {
 }
 
 func TestReadAllowlistAndSDKValidation(t *testing.T) {
-	r := AWSRegistry(aws.Config{Region: "us-east-1"})
-	e := NewEngine(r)
+	e := NewAWSEngine(aws.Config{Region: "us-east-1"})
 	if _, err := e.Query(context.Background(), "s", Query{Action: "ec2.StopInstances"}); err == nil {
 		t.Fatal("write accepted by query")
 	}
+	s3, err := e.find("s3.ListObjectsV2")
+	if err != nil {
+		t.Fatal(err)
+	}
 	for _, p := range []string{`{"bucket":"x"}`, `{"Bucket":"x","Unknown":1}`, `{"Bucket":null}`, `{"Bucket":5}`, `{}`} {
-		if err := r["s3.ListObjectsV2"].Validate(json.RawMessage(p)); err == nil {
+		if err := s3.Validate(json.RawMessage(p)); err == nil {
 			t.Fatalf("accepted %s", p)
 		}
 	}
-	if err := r["ec2.DescribeInstances"].Validate(json.RawMessage(`{"Filters":[{"Name":"tag:Name","Values":["api"]}]}`)); err != nil {
+	ec2, _ := e.find("ec2.DescribeInstances")
+	if err := ec2.Validate(json.RawMessage(`{"Filters":[{"Name":"tag:Name","Values":["api"]}]}`)); err != nil {
 		t.Fatal(err)
 	}
 	got, err := e.Discover("ec2.DescribeInstances")
-	if err != nil || !strings.Contains(got, "Filters") {
+	if err != nil || !strings.Contains(got, "Filters") || !strings.Contains(got, "Reservations") {
 		t.Fatalf("discovery %q %v", got, err)
-	}
-	for name, a := range r {
-		if a.expression == nil || a.Call == nil || a.Validate == nil {
-			t.Fatalf("incomplete action %s", name)
-		}
 	}
 }
 
@@ -113,28 +112,24 @@ func TestDeltaIsolationAndFailureAtomicity(t *testing.T) {
 
 func TestDeltaIsolationAcrossRegions(t *testing.T) {
 	var calls []string
-	makeAction := func(region string) *Action {
-		a := fakeAction("logs.GetLogEvents", "Events", func(_ context.Context, p json.RawMessage) (any, error) {
-			args, _ := parameters(p)
-			if args["NextToken"] != nil {
-				calls = append(calls, region+":continued")
-			} else {
-				calls = append(calls, region+":first")
-			}
-			return map[string]any{"Events": []any{region}, "NextForwardToken": region + "-next"}, nil
-		})
-		a.TokenOut = "NextForwardToken"
-		return a
-	}
-	defaultAction := makeAction("us-west-1")
-	e := NewEngine(Registry{defaultAction.Name: defaultAction})
+	a := fakeAction("logs.GetLogEvents", "Events", func(ctx context.Context, p json.RawMessage) (any, error) {
+		region, _ := ctx.Value(regionKey{}).(string)
+		if region == "" {
+			region = "us-west-1"
+		}
+		args, _ := parameters(p)
+		if args["NextToken"] != nil {
+			calls = append(calls, region+":continued")
+		} else {
+			calls = append(calls, region+":first")
+		}
+		return map[string]any{"Events": []any{region}, "NextForwardToken": region + "-next"}, nil
+	})
+	a.TokenOut = "NextForwardToken"
+	e := NewEngine(Registry{a.Name: a})
 	e.defaultRegion = "us-west-1"
-	e.regionRegistry = func(region string) Registry {
-		a := makeAction(region)
-		return Registry{a.Name: a}
-	}
 	for _, region := range []string{"", "ap-south-1", "", "ap-south-1"} {
-		if _, err := e.Query(context.Background(), "session", Query{Action: defaultAction.Name, Region: region}); err != nil {
+		if _, err := e.Query(context.Background(), "session", Query{Action: a.Name, Region: region}); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -149,18 +144,13 @@ func TestQueryFansOutAcrossRegionsConcurrently(t *testing.T) {
 	release := make(chan struct{})
 	var once sync.Once
 	defer once.Do(func() { close(release) })
-	a := fakeAction("ec2.DescribeInstances", "Items", func(context.Context, json.RawMessage) (any, error) {
-		return map[string]any{"Items": []any{"default"}}, nil
+	a := fakeAction("ec2.DescribeInstances", "Items", func(ctx context.Context, _ json.RawMessage) (any, error) {
+		region, _ := ctx.Value(regionKey{}).(string)
+		started <- region
+		<-release
+		return map[string]any{"Items": []any{region}}, nil
 	})
 	e := NewEngine(Registry{a.Name: a})
-	e.regionRegistry = func(region string) Registry {
-		regional := fakeAction(a.Name, "Items", func(context.Context, json.RawMessage) (any, error) {
-			started <- region
-			<-release
-			return map[string]any{"Items": []any{region}}, nil
-		})
-		return Registry{a.Name: regional}
-	}
 	type outcome struct {
 		text string
 		err  error
@@ -190,19 +180,13 @@ func TestQueryFansOutAcrossRegionsConcurrently(t *testing.T) {
 }
 
 func TestQueryRegionsReportsPartialFailures(t *testing.T) {
-	a := fakeAction("ec2.DescribeInstances", "Items", func(context.Context, json.RawMessage) (any, error) {
-		return nil, errors.New("unused")
+	a := fakeAction("ec2.DescribeInstances", "Items", func(ctx context.Context, _ json.RawMessage) (any, error) {
+		if region, _ := ctx.Value(regionKey{}).(string); region == "us-west-1" {
+			return nil, errors.New("access denied")
+		}
+		return map[string]any{"Items": []any{"found"}}, nil
 	})
 	e := NewEngine(Registry{a.Name: a})
-	e.regionRegistry = func(region string) Registry {
-		regional := fakeAction(a.Name, "Items", func(context.Context, json.RawMessage) (any, error) {
-			if region == "us-west-1" {
-				return nil, errors.New("access denied")
-			}
-			return map[string]any{"Items": []any{"found"}}, nil
-		})
-		return Registry{a.Name: regional}
-	}
 	got, err := e.Query(context.Background(), "s", Query{Action: a.Name, Regions: []string{"ap-south-1", "us-west-1"}})
 	if err != nil || !strings.Contains(got, "found") || !strings.Contains(got, "access denied") || !strings.Contains(got, "partial=true") {
 		t.Fatalf("partial result: %q %v", got, err)

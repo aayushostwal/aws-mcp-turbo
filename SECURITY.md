@@ -11,21 +11,39 @@ This is a local, single-user stdio process. The configured MCP client and operat
 are trusted. It is not a multi-tenant gateway and must not be exposed through an unauthenticated
 network bridge. Session IDs isolate polling state; they do not authenticate AWS callers.
 
-AWS IAM remains the authorization boundary. Action allowlisting prevents arbitrary SDK calls;
-classification is explicit, not inferred from API names. Custom JMESPath can reveal fields omitted
-by presets, including Lambda environment values. Read access is not synonymous with non-sensitive
+AWS IAM remains the authorization boundary. Only operations of the 76 bundled AWS SDK service
+clients can be called; there is no shell, CLI subprocess or generic HTTP dispatcher. Whether an
+operation is a read is **inferred from its name**: `List`, `Describe`, `Get`, `Lookup`, `Search`,
+`BatchGet`, `Query`, `Scan`, `Filter`, `Head`, `Check`, `Simulate`, `Validate`, `Estimate`, `Decode`,
+`Preview`, `AdminGet` and `AdminList` are reads; everything else, and `sts.GetSessionToken`, is a write.
+This is a convention AWS follows consistently but does not guarantee, so grant the server an IAM
+identity that could not do harm even if one read-named operation had side effects. Custom JMESPath
+can reveal fields omitted by default views, including Lambda environment values. Read access is not synonymous with non-sensitive
 access. AWS resource names, logs, and tool output are untrusted data and may contain prompt injection.
 
 The SDK resolves credentials locally and signs requests. This application does not print credential
 values. Existing SDK endpoint overrides, proxy variables, and credential-process configuration are
 trusted administrator inputs; review them when deploying on a shared machine.
 
+## Operations that are never callable
+
+Operations that return credentials, session tokens or key material are removed entirely, even
+for approved writes: `secretsmanager.GetSecretValue`, `secretsmanager.BatchGetSecretValue`,
+`ec2.GetPasswordData`, `sts.GetSessionToken`, `sts.GetFederationToken`, `sts.AssumeRole*`,
+`ecr.GetAuthorizationToken`, `ecr.GetDownloadUrlForLayer`, `redshift.GetClusterCredentials*`,
+`kms.Decrypt`, `kms.GenerateDataKey*`, `iam.CreateAccessKey`, `iam.CreateServiceSpecificCredential`,
+`iam.ResetServiceSpecificCredential`, `cognito.GetCredentialsForIdentity` and `cognito.GetOpenIdToken`.
+Operations whose input or output is a raw byte stream (such as `s3.GetObject` and `s3.PutObject`)
+are not exposed. Reads reject `WithDecryption=true`, `IncludeValue(s)=true`, `IncludePlaintext=true` and
+`HidePassword=false`. The deny list is in `internal/turbo/dynamic.go`; extend it when you find an
+operation that exposes a secret.
+
 ## Mutation gates
 
 Actual execution requires every gate:
 
 1. Server started with `--enable-mutations --audit-file /private/path/audit.jsonl`.
-2. Action is on the write allowlist and has valid local SDK input fields.
+2. The action is an SDK operation that is not a read (and not on the deny list below) and has valid local SDK input fields.
 3. Caller supplies a nonblank `intent` and `execute:true`.
 4. The full request is successfully appended and synced to the private audit file.
 5. A configured approval hook returns `{"approved":true}` and exits 0.

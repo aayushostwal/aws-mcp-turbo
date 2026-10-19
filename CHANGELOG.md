@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.2.0 — Unreleased
+
+A rewrite of how actions are found and how answers are written. Behaviour that existed in 0.1.x
+keeps working except where listed under "Changed".
+
+### Added
+
+- 76 AWS services and about 2,700 read operations, taken from the AWS SDK clients instead of a hand-written
+  list of 61. New services are one line in `internal/turbo/services.go`. Clients are created on first use.
+- Any SDK operation that is not a read can be previewed or approved through `aws_mutate`. Operations that
+  return credentials or key material are not callable.
+- `aws_query` gains `fields`, `group`, `all`, `queries` (up to eight parallel reads) and `macro`.
+- Nine recipes: the two existing ones plus `lambda_errors`, `ec2_instance`, `rds_status`,
+  `ecs_service_status`, `alb_target_health`, `cost_by_service` and `cloudtrail_recent`.
+- Compact output format, now the default (shared values and prefixes stated once, short timestamps).
+- A 15-second read cache, cleared by executed mutations.
+- DynamoDB items as plain values on output and DynamoDB JSON on input.
+- Search by several words in `aws_discover`; an exact action also lists what it returns.
+- `scripts/bench-compare.mjs` and `bench/tasks.json` for comparing with another MCP server.
+
+### Changed
+
+- **Three tools.** `aws_diagnose` is now `aws_query` with `macro`.
+- A response that is too large is cut to the rows that fit and says so, instead of failing.
+- Errors show the AWS error code and message only.
+- `aws_mutate` accepts an optional `region`.
+- Releases include a gzip copy of each binary (about 40 MB instead of about 190 MB) that the npm launcher uses.
+- Reads are recognised by operation name, with a deny list and flag guards, instead of a list of operations.
+  See [SECURITY.md](SECURITY.md).
+
+### Fixed
+
+- `scripts/token_metrics.py --help` crashed on an unescaped percent sign.
+
 ## 0.1.4 — Unreleased
 
 - Added structured discovery results alongside text for MCP clients that consume structured tool output.

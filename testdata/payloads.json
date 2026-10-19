@@ -1,56 +1,6305 @@
 [
-  {
-    "action": "ec2.DescribeInstances",
-    "response": {
-      "Reservations": [{"ReservationId":"r-0123456789abcdef0","OwnerId":"123456789012","Groups":[],"Instances":[{
-        "InstanceId":"i-0123456789abcdef0","State":{"Code":16,"Name":"running"},"InstanceType":"t3.medium","PrivateIpAddress":"10.0.1.10",
-        "Tags":[{"Key":"Name","Value":"api"},{"Key":"Environment","Value":"production"},{"Key":"Owner","Value":"platform"}],
-        "Architecture":"x86_64","AmiLaunchIndex":0,"BootMode":"uefi-preferred","CurrentInstanceBootMode":"uefi","EbsOptimized":true,"EnaSupport":true,
-        "Hypervisor":"xen","ImageId":"ami-0123456789abcdef0","KeyName":"example-key","LaunchTime":"2026-01-01T00:00:00Z","PublicDnsName":"","PublicIpAddress":null,
-        "PrivateDnsName":"ip-10-0-1-10.ec2.internal","RootDeviceName":"/dev/xvda","RootDeviceType":"ebs","SourceDestCheck":true,"StateTransitionReason":"",
-        "SubnetId":"subnet-0123456789abcdef0","VpcId":"vpc-0123456789abcdef0","VirtualizationType":"hvm","CpuOptions":{"CoreCount":1,"ThreadsPerCore":2},
-        "Placement":{"AvailabilityZone":"us-east-1a","GroupName":"","Tenancy":"default"},"Monitoring":{"State":"disabled"},
-        "MetadataOptions":{"State":"applied","HttpTokens":"required","HttpPutResponseHopLimit":1,"HttpEndpoint":"enabled","HttpProtocolIpv6":"disabled","InstanceMetadataTags":"disabled"},
-        "NetworkInterfaces":[{"NetworkInterfaceId":"eni-0123456789abcdef0","MacAddress":"00:11:22:33:44:55","PrivateIpAddress":"10.0.1.10","SourceDestCheck":true,"Status":"in-use","SubnetId":"subnet-0123456789abcdef0","VpcId":"vpc-0123456789abcdef0","Groups":[{"GroupId":"sg-0123456789abcdef0","GroupName":"api"}],"PrivateIpAddresses":[{"Primary":true,"PrivateIpAddress":"10.0.1.10","PrivateDnsName":"ip-10-0-1-10.ec2.internal"}]}],
-        "BlockDeviceMappings":[{"DeviceName":"/dev/xvda","Ebs":{"AttachTime":"2026-01-01T00:00:00Z","DeleteOnTermination":true,"Status":"attached","VolumeId":"vol-0123456789abcdef0"}}],
-        "IamInstanceProfile":{"Arn":"arn:aws:iam::123456789012:instance-profile/api","Id":"EXAMPLEPROFILE"},"SecurityGroups":[{"GroupId":"sg-0123456789abcdef0","GroupName":"api"}],"ProductCodes":[],"Licenses":[]
-      }]}],"NextToken":null,"ResultMetadata":{"RequestID":"example-request"}
+ {
+  "action": "ec2.DescribeInstances",
+  "response": {
+   "Reservations": [
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-0123456789abcdef0",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.1.10",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
     }
-  },
-  {
-    "action":"ec2.DescribeVolumes",
-    "response":{"Volumes":[{"VolumeId":"vol-0123456789abcdef0","State":"in-use","Size":100,"VolumeType":"gp3","AvailabilityZone":"us-east-1a","Attachments":[{"InstanceId":"i-0123456789abcdef0","VolumeId":"vol-0123456789abcdef0","Device":"/dev/xvda","State":"attached","AttachTime":"2026-01-01T00:00:00Z","DeleteOnTermination":true}],"CreateTime":"2026-01-01T00:00:00Z","Encrypted":true,"Iops":3000,"Throughput":125,"KmsKeyId":"arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000","MultiAttachEnabled":false,"SnapshotId":"snap-0123456789abcdef0","FastRestored":false,"Tags":[{"Key":"Owner","Value":"platform"},{"Key":"Environment","Value":"production"}]}],"NextToken":null,"ResultMetadata":{"RequestID":"example-request"}}
-  },
-  {
-    "action":"ec2.DescribeSecurityGroups",
-    "response":{"SecurityGroups":[{"GroupId":"sg-0123456789abcdef0","GroupName":"api","VpcId":"vpc-0123456789abcdef0","Description":"API security group","OwnerId":"123456789012","IpPermissions":[{"FromPort":443,"ToPort":443,"IpProtocol":"tcp","IpRanges":[{"CidrIp":"10.0.0.0/8","Description":"internal"}],"Ipv6Ranges":[],"PrefixListIds":[],"UserIdGroupPairs":[]}],"IpPermissionsEgress":[{"IpProtocol":"-1","IpRanges":[{"CidrIp":"0.0.0.0/0"}],"Ipv6Ranges":[],"PrefixListIds":[],"UserIdGroupPairs":[]}],"Tags":[{"Key":"Environment","Value":"production"}]}],"NextToken":null,"ResultMetadata":{"RequestID":"example-request"}}
-  },
-  {
-    "action":"s3.ListBuckets",
-    "response":{"Buckets":[{"Name":"example-artifacts","CreationDate":"2026-01-01T00:00:00Z","BucketRegion":"us-east-1","BucketArn":"arn:aws:s3:::example-artifacts"},{"Name":"example-logs","CreationDate":"2026-01-02T00:00:00Z","BucketRegion":"us-east-1","BucketArn":"arn:aws:s3:::example-logs"}],"Owner":{"DisplayName":"example","ID":"1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"},"ContinuationToken":null,"Prefix":null,"ResultMetadata":{"RequestID":"example-request"}}
-  },
-  {
-    "action":"s3.ListObjectsV2",
-    "response":{"Name":"example-artifacts","Prefix":"releases/","MaxKeys":1000,"KeyCount":1,"IsTruncated":false,"Contents":[{"Key":"releases/app.zip","Size":1048576,"LastModified":"2026-01-01T00:00:00Z","StorageClass":"STANDARD","ETag":"\"0123456789abcdef0123456789abcdef\"","ChecksumAlgorithm":["SHA256"],"ChecksumType":"FULL_OBJECT","Owner":{"DisplayName":"example","ID":"1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"},"RestoreStatus":null}],"CommonPrefixes":[],"ContinuationToken":null,"NextContinuationToken":null,"Delimiter":null,"EncodingType":"","StartAfter":null,"ResultMetadata":{"RequestID":"example-request"}}
-  },
-  {
-    "action":"lambda.ListFunctions",
-    "response":{"Functions":[{"FunctionName":"api-handler","Runtime":"python3.12","MemorySize":256,"Timeout":30,"LastModified":"2026-01-01T00:00:00Z","FunctionArn":"arn:aws:lambda:us-east-1:123456789012:function:api-handler","Handler":"index.handler","Role":"arn:aws:iam::123456789012:role/api-handler","CodeSize":1048576,"CodeSha256":"exampleHashValue","Description":"Example API handler","Version":"$LATEST","Architectures":["arm64"],"Environment":{"Variables":{"ENVIRONMENT":"production","LOG_LEVEL":"INFO"}},"TracingConfig":{"Mode":"PassThrough"},"EphemeralStorage":{"Size":512},"VpcConfig":{"SubnetIds":["subnet-0123456789abcdef0"],"SecurityGroupIds":["sg-0123456789abcdef0"],"VpcId":"vpc-0123456789abcdef0"},"PackageType":"Zip","Layers":[],"DeadLetterConfig":null,"KMSKeyArn":null,"MasterArn":null}],"NextMarker":null,"ResultMetadata":{"RequestID":"example-request"}}
-  },
-  {
-    "action":"lambda.GetFunctionConfiguration",
-    "response":{"FunctionName":"api-handler","State":"Active","StateReason":null,"Runtime":"python3.12","Timeout":30,"MemorySize":256,"LastUpdateStatus":"Successful","LastUpdateStatusReason":null,"FunctionArn":"arn:aws:lambda:us-east-1:123456789012:function:api-handler","Handler":"index.handler","Role":"arn:aws:iam::123456789012:role/api-handler","CodeSize":1048576,"CodeSha256":"exampleHashValue","Description":"Example API handler","LastModified":"2026-01-01T00:00:00Z","Version":"$LATEST","RevisionId":"00000000-0000-0000-0000-000000000000","Architectures":["arm64"],"Environment":{"Variables":{"ENVIRONMENT":"production","LOG_LEVEL":"INFO"}},"TracingConfig":{"Mode":"PassThrough"},"EphemeralStorage":{"Size":512},"VpcConfig":{"SubnetIds":["subnet-0123456789abcdef0"],"SecurityGroupIds":["sg-0123456789abcdef0"],"VpcId":"vpc-0123456789abcdef0"},"PackageType":"Zip","Layers":[],"DeadLetterConfig":null,"KMSKeyArn":null,"SigningJobArn":null,"SigningProfileVersionArn":null,"ResultMetadata":{"RequestID":"example-request"}}
-  },
-  {
-    "action":"ecs.DescribeTasks",
-    "response":{"Tasks":[{"TaskArn":"arn:aws:ecs:us-east-1:123456789012:task/prod/example","LastStatus":"STOPPED","StopCode":"EssentialContainerExited","StoppedReason":"Essential container in task exited","Containers":[{"Name":"api","ExitCode":137,"Reason":"OutOfMemoryError: Container killed due to memory usage","ContainerArn":"arn:aws:ecs:us-east-1:123456789012:container/prod/example","Image":"123456789012.dkr.ecr.us-east-1.amazonaws.com/api:latest","ImageDigest":"sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","RuntimeId":"example-runtime","LastStatus":"STOPPED","Cpu":"256","Memory":"512","NetworkBindings":[],"NetworkInterfaces":[{"AttachmentId":"example-attachment","PrivateIpv4Address":"10.0.1.5"}],"HealthStatus":"UNKNOWN","ManagedAgents":[]}],"ClusterArn":"arn:aws:ecs:us-east-1:123456789012:cluster/prod","TaskDefinitionArn":"arn:aws:ecs:us-east-1:123456789012:task-definition/api:12","Cpu":"256","Memory":"512","LaunchType":"FARGATE","PlatformVersion":"1.4.0","AvailabilityZone":"us-east-1a","Connectivity":"CONNECTED","ConnectivityAt":"2026-01-01T00:00:00Z","CreatedAt":"2026-01-01T00:00:00Z","StartedAt":"2026-01-01T00:01:00Z","StoppedAt":"2026-01-01T00:10:00Z","DesiredStatus":"STOPPED","EnableExecuteCommand":false,"Group":"service:api","HealthStatus":"UNKNOWN","Overrides":{"ContainerOverrides":[{"Name":"api","Command":[],"Environment":[],"ResourceRequirements":[]}]},"Tags":[],"Attachments":[]}],"Failures":[],"ResultMetadata":{"RequestID":"example-request"}}
-  },
-  {
-    "action":"logs.GetLogEvents",
-    "response":{"Events":[{"Timestamp":1767225600000,"IngestionTime":1767225600100,"Message":"START RequestId: example Version: $LATEST"},{"Timestamp":1767225630000,"IngestionTime":1767225630100,"Message":"Task timed out after 30.00 seconds"}],"NextForwardToken":"f/01234567890123456789012345678901234567890123456789012345","NextBackwardToken":"b/01234567890123456789012345678901234567890123456789012345","ResultMetadata":{"RequestID":"example-request"}}
-  },
-  {
-    "action":"logs.FilterLogEvents",
-    "response":{"Events":[{"Timestamp":1767225630000,"IngestionTime":1767225630100,"Message":"Task timed out after 30.00 seconds","LogStreamName":"2026/01/01/[$LATEST]example","EventId":"01234567890123456789012345678901234567890123456789012345"}],"SearchedLogStreams":[{"LogStreamName":"2026/01/01/[$LATEST]example","SearchedCompletely":true}],"NextToken":null,"ResultMetadata":{"RequestID":"example-request"}}
+   ],
+   "NextToken": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
   }
+ },
+ {
+  "action": "ec2.DescribeVolumes",
+  "response": {
+   "Volumes": [
+    {
+     "VolumeId": "vol-0123456789abcdef0",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-0123456789abcdef0",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    }
+   ],
+   "NextToken": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  }
+ },
+ {
+  "action": "ec2.DescribeSecurityGroups",
+  "response": {
+   "SecurityGroups": [
+    {
+     "GroupId": "sg-0123456789abcdef0",
+     "GroupName": "api",
+     "VpcId": "vpc-0123456789abcdef0",
+     "Description": "API security group",
+     "OwnerId": "123456789012",
+     "IpPermissions": [
+      {
+       "FromPort": 443,
+       "ToPort": 443,
+       "IpProtocol": "tcp",
+       "IpRanges": [
+        {
+         "CidrIp": "10.0.0.0/8",
+         "Description": "internal"
+        }
+       ],
+       "Ipv6Ranges": [],
+       "PrefixListIds": [],
+       "UserIdGroupPairs": []
+      }
+     ],
+     "IpPermissionsEgress": [
+      {
+       "IpProtocol": "-1",
+       "IpRanges": [
+        {
+         "CidrIp": "0.0.0.0/0"
+        }
+       ],
+       "Ipv6Ranges": [],
+       "PrefixListIds": [],
+       "UserIdGroupPairs": []
+      }
+     ],
+     "Tags": [
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    }
+   ],
+   "NextToken": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  }
+ },
+ {
+  "action": "s3.ListBuckets",
+  "response": {
+   "Buckets": [
+    {
+     "Name": "example-artifacts",
+     "CreationDate": "2026-01-01T00:00:00Z",
+     "BucketRegion": "us-east-1",
+     "BucketArn": "arn:aws:s3:::example-artifacts"
+    },
+    {
+     "Name": "example-logs",
+     "CreationDate": "2026-01-02T00:00:00Z",
+     "BucketRegion": "us-east-1",
+     "BucketArn": "arn:aws:s3:::example-logs"
+    }
+   ],
+   "Owner": {
+    "DisplayName": "example",
+    "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+   },
+   "ContinuationToken": null,
+   "Prefix": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  }
+ },
+ {
+  "action": "s3.ListObjectsV2",
+  "response": {
+   "Name": "example-artifacts",
+   "Prefix": "releases/",
+   "MaxKeys": 1000,
+   "KeyCount": 1,
+   "IsTruncated": false,
+   "Contents": [
+    {
+     "Key": "releases/app.zip",
+     "Size": 1048576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    }
+   ],
+   "CommonPrefixes": [],
+   "ContinuationToken": null,
+   "NextContinuationToken": null,
+   "Delimiter": null,
+   "EncodingType": "",
+   "StartAfter": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  }
+ },
+ {
+  "action": "lambda.ListFunctions",
+  "response": {
+   "Functions": [
+    {
+     "FunctionName": "api-handler",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:api-handler",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    }
+   ],
+   "NextMarker": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  }
+ },
+ {
+  "action": "lambda.GetFunctionConfiguration",
+  "response": {
+   "FunctionName": "api-handler",
+   "State": "Active",
+   "StateReason": null,
+   "Runtime": "python3.12",
+   "Timeout": 30,
+   "MemorySize": 256,
+   "LastUpdateStatus": "Successful",
+   "LastUpdateStatusReason": null,
+   "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:api-handler",
+   "Handler": "index.handler",
+   "Role": "arn:aws:iam::123456789012:role/api-handler",
+   "CodeSize": 1048576,
+   "CodeSha256": "exampleHashValue",
+   "Description": "Example API handler",
+   "LastModified": "2026-01-01T00:00:00Z",
+   "Version": "$LATEST",
+   "RevisionId": "00000000-0000-0000-0000-000000000000",
+   "Architectures": [
+    "arm64"
+   ],
+   "Environment": {
+    "Variables": {
+     "ENVIRONMENT": "production",
+     "LOG_LEVEL": "INFO"
+    }
+   },
+   "TracingConfig": {
+    "Mode": "PassThrough"
+   },
+   "EphemeralStorage": {
+    "Size": 512
+   },
+   "VpcConfig": {
+    "SubnetIds": [
+     "subnet-0123456789abcdef0"
+    ],
+    "SecurityGroupIds": [
+     "sg-0123456789abcdef0"
+    ],
+    "VpcId": "vpc-0123456789abcdef0"
+   },
+   "PackageType": "Zip",
+   "Layers": [],
+   "DeadLetterConfig": null,
+   "KMSKeyArn": null,
+   "SigningJobArn": null,
+   "SigningProfileVersionArn": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  }
+ },
+ {
+  "action": "ecs.DescribeTasks",
+  "response": {
+   "Tasks": [
+    {
+     "TaskArn": "arn:aws:ecs:us-east-1:123456789012:task/prod/example",
+     "LastStatus": "STOPPED",
+     "StopCode": "EssentialContainerExited",
+     "StoppedReason": "Essential container in task exited",
+     "Containers": [
+      {
+       "Name": "api",
+       "ExitCode": 137,
+       "Reason": "OutOfMemoryError: Container killed due to memory usage",
+       "ContainerArn": "arn:aws:ecs:us-east-1:123456789012:container/prod/example",
+       "Image": "123456789012.dkr.ecr.us-east-1.amazonaws.com/api:latest",
+       "ImageDigest": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+       "RuntimeId": "example-runtime",
+       "LastStatus": "STOPPED",
+       "Cpu": "256",
+       "Memory": "512",
+       "NetworkBindings": [],
+       "NetworkInterfaces": [
+        {
+         "AttachmentId": "example-attachment",
+         "PrivateIpv4Address": "10.0.1.5"
+        }
+       ],
+       "HealthStatus": "UNKNOWN",
+       "ManagedAgents": []
+      }
+     ],
+     "ClusterArn": "arn:aws:ecs:us-east-1:123456789012:cluster/prod",
+     "TaskDefinitionArn": "arn:aws:ecs:us-east-1:123456789012:task-definition/api:12",
+     "Cpu": "256",
+     "Memory": "512",
+     "LaunchType": "FARGATE",
+     "PlatformVersion": "1.4.0",
+     "AvailabilityZone": "us-east-1a",
+     "Connectivity": "CONNECTED",
+     "ConnectivityAt": "2026-01-01T00:00:00Z",
+     "CreatedAt": "2026-01-01T00:00:00Z",
+     "StartedAt": "2026-01-01T00:01:00Z",
+     "StoppedAt": "2026-01-01T00:10:00Z",
+     "DesiredStatus": "STOPPED",
+     "EnableExecuteCommand": false,
+     "Group": "service:api",
+     "HealthStatus": "UNKNOWN",
+     "Overrides": {
+      "ContainerOverrides": [
+       {
+        "Name": "api",
+        "Command": [],
+        "Environment": [],
+        "ResourceRequirements": []
+       }
+      ]
+     },
+     "Tags": [],
+     "Attachments": []
+    }
+   ],
+   "Failures": [],
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  }
+ },
+ {
+  "action": "logs.GetLogEvents",
+  "response": {
+   "Events": [
+    {
+     "Timestamp": 1767225600000,
+     "IngestionTime": 1767225600100,
+     "Message": "START RequestId: example Version: $LATEST"
+    },
+    {
+     "Timestamp": 1767225630000,
+     "IngestionTime": 1767225630100,
+     "Message": "Task timed out after 30.00 seconds"
+    }
+   ],
+   "NextForwardToken": "f/01234567890123456789012345678901234567890123456789012345",
+   "NextBackwardToken": "b/01234567890123456789012345678901234567890123456789012345",
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  }
+ },
+ {
+  "action": "logs.FilterLogEvents",
+  "response": {
+   "Events": [
+    {
+     "Timestamp": 1767225630000,
+     "IngestionTime": 1767225630100,
+     "Message": "Task timed out after 30.00 seconds",
+     "LogStreamName": "2026/01/01/[$LATEST]example",
+     "EventId": "01234567890123456789012345678901234567890123456789012345"
+    }
+   ],
+   "SearchedLogStreams": [
+    {
+     "LogStreamName": "2026/01/01/[$LATEST]example",
+     "SearchedCompletely": true
+    }
+   ],
+   "NextToken": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  }
+ },
+ {
+  "action": "ec2.DescribeInstances",
+  "response": {
+   "Reservations": [
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc000",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.10",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-00"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc001",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.11",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-01"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc002",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.12",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-02"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc003",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.13",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-03"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc004",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.14",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-04"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc005",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.15",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-05"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc006",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.16",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-06"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc007",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.17",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-07"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc008",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.18",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-08"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc009",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.19",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-09"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc00a",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.20",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-10"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc00b",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.21",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-11"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc00c",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.22",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-12"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc00d",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.23",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-13"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc00e",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.24",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-14"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc00f",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.25",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-15"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc010",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.26",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-16"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc011",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.27",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-17"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc012",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.28",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-18"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc013",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.29",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-19"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc014",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.30",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-20"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc015",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.31",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-21"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc016",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.32",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-22"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc017",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.33",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-23"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    },
+    {
+     "ReservationId": "r-0123456789abcdef0",
+     "OwnerId": "123456789012",
+     "Groups": [],
+     "Instances": [
+      {
+       "InstanceId": "i-00000000000abc018",
+       "State": {
+        "Code": 16,
+        "Name": "running"
+       },
+       "InstanceType": "t3.medium",
+       "PrivateIpAddress": "10.0.0.34",
+       "Tags": [
+        {
+         "Key": "Name",
+         "Value": "api-24"
+        },
+        {
+         "Key": "Environment",
+         "Value": "production"
+        },
+        {
+         "Key": "Owner",
+         "Value": "platform"
+        }
+       ],
+       "Architecture": "x86_64",
+       "AmiLaunchIndex": 0,
+       "BootMode": "uefi-preferred",
+       "CurrentInstanceBootMode": "uefi",
+       "EbsOptimized": true,
+       "EnaSupport": true,
+       "Hypervisor": "xen",
+       "ImageId": "ami-0123456789abcdef0",
+       "KeyName": "example-key",
+       "LaunchTime": "2026-01-01T00:00:00Z",
+       "PublicDnsName": "",
+       "PublicIpAddress": null,
+       "PrivateDnsName": "ip-10-0-1-10.ec2.internal",
+       "RootDeviceName": "/dev/xvda",
+       "RootDeviceType": "ebs",
+       "SourceDestCheck": true,
+       "StateTransitionReason": "",
+       "SubnetId": "subnet-0123456789abcdef0",
+       "VpcId": "vpc-0123456789abcdef0",
+       "VirtualizationType": "hvm",
+       "CpuOptions": {
+        "CoreCount": 1,
+        "ThreadsPerCore": 2
+       },
+       "Placement": {
+        "AvailabilityZone": "us-east-1a",
+        "GroupName": "",
+        "Tenancy": "default"
+       },
+       "Monitoring": {
+        "State": "disabled"
+       },
+       "MetadataOptions": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+       },
+       "NetworkInterfaces": [
+        {
+         "NetworkInterfaceId": "eni-0123456789abcdef0",
+         "MacAddress": "00:11:22:33:44:55",
+         "PrivateIpAddress": "10.0.1.10",
+         "SourceDestCheck": true,
+         "Status": "in-use",
+         "SubnetId": "subnet-0123456789abcdef0",
+         "VpcId": "vpc-0123456789abcdef0",
+         "Groups": [
+          {
+           "GroupId": "sg-0123456789abcdef0",
+           "GroupName": "api"
+          }
+         ],
+         "PrivateIpAddresses": [
+          {
+           "Primary": true,
+           "PrivateIpAddress": "10.0.1.10",
+           "PrivateDnsName": "ip-10-0-1-10.ec2.internal"
+          }
+         ]
+        }
+       ],
+       "BlockDeviceMappings": [
+        {
+         "DeviceName": "/dev/xvda",
+         "Ebs": {
+          "AttachTime": "2026-01-01T00:00:00Z",
+          "DeleteOnTermination": true,
+          "Status": "attached",
+          "VolumeId": "vol-0123456789abcdef0"
+         }
+        }
+       ],
+       "IamInstanceProfile": {
+        "Arn": "arn:aws:iam::123456789012:instance-profile/api",
+        "Id": "EXAMPLEPROFILE"
+       },
+       "SecurityGroups": [
+        {
+         "GroupId": "sg-0123456789abcdef0",
+         "GroupName": "api"
+        }
+       ],
+       "ProductCodes": [],
+       "Licenses": []
+      }
+     ]
+    }
+   ],
+   "NextToken": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  },
+  "label": "ec2.DescribeInstances x25"
+ },
+ {
+  "action": "lambda.ListFunctions",
+  "response": {
+   "Functions": [
+    {
+     "FunctionName": "service-00",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-01-10T10:00:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-00",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-01",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-02-11T10:01:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-01",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-02",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-03-12T10:02:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-02",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-03",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-04-13T10:03:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-03",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-04",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-05-14T10:04:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-04",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-05",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-06-15T10:05:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-05",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-06",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-07-16T10:06:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-06",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-07",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-08-17T10:07:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-07",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-08",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-09-18T10:08:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-08",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-09",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-01-10T10:09:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-09",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-10",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-02-11T10:10:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-10",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-11",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-03-12T10:11:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-11",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-12",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-04-13T10:12:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-12",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-13",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-05-14T10:13:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-13",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-14",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-06-15T10:14:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-14",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-15",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-07-16T10:15:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-15",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-16",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-08-17T10:16:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-16",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-17",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-09-18T10:17:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-17",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-18",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-01-10T10:18:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-18",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-19",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-02-11T10:19:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-19",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-20",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-03-12T10:20:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-20",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-21",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-04-13T10:21:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-21",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-22",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-05-14T10:22:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-22",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-23",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-06-15T10:23:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-23",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-24",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-07-16T10:24:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-24",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-25",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-08-17T10:25:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-25",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-26",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-09-18T10:26:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-26",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-27",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-01-10T10:27:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-27",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-28",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-02-11T10:28:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-28",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    },
+    {
+     "FunctionName": "service-29",
+     "Runtime": "python3.12",
+     "MemorySize": 256,
+     "Timeout": 30,
+     "LastModified": "2026-03-12T10:29:00.000+0000",
+     "FunctionArn": "arn:aws:lambda:us-east-1:123456789012:function:service-29",
+     "Handler": "index.handler",
+     "Role": "arn:aws:iam::123456789012:role/api-handler",
+     "CodeSize": 1048576,
+     "CodeSha256": "exampleHashValue",
+     "Description": "Example API handler",
+     "Version": "$LATEST",
+     "Architectures": [
+      "arm64"
+     ],
+     "Environment": {
+      "Variables": {
+       "ENVIRONMENT": "production",
+       "LOG_LEVEL": "INFO"
+      }
+     },
+     "TracingConfig": {
+      "Mode": "PassThrough"
+     },
+     "EphemeralStorage": {
+      "Size": 512
+     },
+     "VpcConfig": {
+      "SubnetIds": [
+       "subnet-0123456789abcdef0"
+      ],
+      "SecurityGroupIds": [
+       "sg-0123456789abcdef0"
+      ],
+      "VpcId": "vpc-0123456789abcdef0"
+     },
+     "PackageType": "Zip",
+     "Layers": [],
+     "DeadLetterConfig": null,
+     "KMSKeyArn": null,
+     "MasterArn": null
+    }
+   ],
+   "NextMarker": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  },
+  "label": "lambda.ListFunctions x30"
+ },
+ {
+  "action": "s3.ListObjectsV2",
+  "response": {
+   "Name": "example-artifacts",
+   "Prefix": "releases/",
+   "MaxKeys": 1000,
+   "KeyCount": 1,
+   "IsTruncated": false,
+   "Contents": [
+    {
+     "Key": "releases/build-000.zip",
+     "Size": 1048576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-001.zip",
+     "Size": 1049576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-002.zip",
+     "Size": 1050576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-003.zip",
+     "Size": 1051576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-004.zip",
+     "Size": 1052576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-005.zip",
+     "Size": 1053576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-006.zip",
+     "Size": 1054576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-007.zip",
+     "Size": 1055576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-008.zip",
+     "Size": 1056576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-009.zip",
+     "Size": 1057576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-010.zip",
+     "Size": 1058576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-011.zip",
+     "Size": 1059576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-012.zip",
+     "Size": 1060576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-013.zip",
+     "Size": 1061576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-014.zip",
+     "Size": 1062576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-015.zip",
+     "Size": 1063576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-016.zip",
+     "Size": 1064576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-017.zip",
+     "Size": 1065576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-018.zip",
+     "Size": 1066576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-019.zip",
+     "Size": 1067576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-020.zip",
+     "Size": 1068576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-021.zip",
+     "Size": 1069576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-022.zip",
+     "Size": 1070576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-023.zip",
+     "Size": 1071576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-024.zip",
+     "Size": 1072576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-025.zip",
+     "Size": 1073576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-026.zip",
+     "Size": 1074576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-027.zip",
+     "Size": 1075576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-028.zip",
+     "Size": 1076576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-029.zip",
+     "Size": 1077576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-030.zip",
+     "Size": 1078576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-031.zip",
+     "Size": 1079576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-032.zip",
+     "Size": 1080576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-033.zip",
+     "Size": 1081576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-034.zip",
+     "Size": 1082576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-035.zip",
+     "Size": 1083576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-036.zip",
+     "Size": 1084576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-037.zip",
+     "Size": 1085576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-038.zip",
+     "Size": 1086576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    },
+    {
+     "Key": "releases/build-039.zip",
+     "Size": 1087576,
+     "LastModified": "2026-01-01T00:00:00Z",
+     "StorageClass": "STANDARD",
+     "ETag": "\"0123456789abcdef0123456789abcdef\"",
+     "ChecksumAlgorithm": [
+      "SHA256"
+     ],
+     "ChecksumType": "FULL_OBJECT",
+     "Owner": {
+      "DisplayName": "example",
+      "ID": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234"
+     },
+     "RestoreStatus": null
+    }
+   ],
+   "CommonPrefixes": [],
+   "ContinuationToken": null,
+   "NextContinuationToken": null,
+   "Delimiter": null,
+   "EncodingType": "",
+   "StartAfter": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  },
+  "label": "s3.ListObjectsV2 x40"
+ },
+ {
+  "action": "ec2.DescribeVolumes",
+  "response": {
+   "Volumes": [
+    {
+     "VolumeId": "vol-00000000000def000",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc000",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def001",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc001",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def002",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc002",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def003",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc003",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def004",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc004",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def005",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc005",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def006",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc006",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def007",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc007",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def008",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc008",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def009",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc009",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def00a",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc00a",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def00b",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc00b",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def00c",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc00c",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def00d",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc00d",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def00e",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc00e",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def00f",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc00f",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def010",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc010",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def011",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc011",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def012",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc012",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def013",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc013",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def014",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc014",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def015",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc015",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def016",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc016",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def017",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc017",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    },
+    {
+     "VolumeId": "vol-00000000000def018",
+     "State": "in-use",
+     "Size": 100,
+     "VolumeType": "gp3",
+     "AvailabilityZone": "us-east-1a",
+     "Attachments": [
+      {
+       "InstanceId": "i-00000000000abc018",
+       "VolumeId": "vol-0123456789abcdef0",
+       "Device": "/dev/xvda",
+       "State": "attached",
+       "AttachTime": "2026-01-01T00:00:00Z",
+       "DeleteOnTermination": true
+      }
+     ],
+     "CreateTime": "2026-01-01T00:00:00Z",
+     "Encrypted": true,
+     "Iops": 3000,
+     "Throughput": 125,
+     "KmsKeyId": "arn:aws:kms:us-east-1:123456789012:key/00000000-0000-0000-0000-000000000000",
+     "MultiAttachEnabled": false,
+     "SnapshotId": "snap-0123456789abcdef0",
+     "FastRestored": false,
+     "Tags": [
+      {
+       "Key": "Owner",
+       "Value": "platform"
+      },
+      {
+       "Key": "Environment",
+       "Value": "production"
+      }
+     ]
+    }
+   ],
+   "NextToken": null,
+   "ResultMetadata": {
+    "RequestID": "example-request"
+   }
+  },
+  "label": "ec2.DescribeVolumes x25"
+ }
 ]

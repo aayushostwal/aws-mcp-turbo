@@ -10,11 +10,11 @@ npx -y @ostwal/aws-mcp-turbo@latest --version
 ```
 
 Configure an MCP client to launch this command with `--region <region>`.
-It exposes four tools for AWS discovery, projected reads, diagnostic macros, and guarded writes.
+It exposes three tools for AWS discovery, compact reads across 76 services (with batching and recipes), and guarded writes.
 Mutations are disabled by default. Credentials use the standard AWS SDK chain; SSO login is
 performed separately using the AWS CLI.
 
-On first use, the wrapper downloads the matching native GitHub release and verifies SHA-256.
+On first use, the wrapper downloads the matching native GitHub release (a gzip copy of about 40 MB) and verifies SHA-256 of both the download and the binary.
 It caches the executable in `$XDG_CACHE_HOME/aws-mcp-turbo/<version>` or
 `~/.cache/aws-mcp-turbo/<version>`, and verifies the cached hash before execution.
 Download diagnostics use stderr; stdin/stdout belong to MCP. Use `@latest` in IDE configs to

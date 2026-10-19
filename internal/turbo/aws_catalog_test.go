@@ -12,39 +12,17 @@ import (
 	"github.com/aws/smithy-go/encoding/cbor"
 )
 
-func TestAWSRegistryCoversThirtyServicesWithBoundedDiscovery(t *testing.T) {
-	r := AWSRegistry(aws.Config{Region: "us-west-1"})
-	wantServices := strings.Fields("ec2 s3 lambda ecs logs sts iam cloudwatch rds elbv2 autoscaling eks cloudformation route53 dynamodb sqs sns apigateway apigatewayv2 events secretsmanager ssm kms cloudtrail backup ecr elasticache acm organizations bedrock")
-	gotServices := map[string]bool{}
-	for name, a := range r {
-		gotServices[strings.SplitN(name, ".", 2)[0]] = true
-		if a.Name != name || a.Projection == "" || a.expression == nil || a.Call == nil || a.Validate == nil {
-			t.Errorf("incomplete action %q", name)
-		}
+func mustResolve(t *testing.T, r *ServiceSet, name string) *Action {
+	t.Helper()
+	a, err := r.Resolve(name)
+	if err != nil {
+		t.Fatal(err)
 	}
-	if len(gotServices) != len(wantServices) {
-		t.Fatalf("services=%d, want=%d: %v", len(gotServices), len(wantServices), gotServices)
-	}
-	for _, service := range wantServices {
-		if !gotServices[service] {
-			t.Errorf("missing service %s", service)
-		}
-	}
-	if len(r) != 61 {
-		t.Fatalf("actions=%d, want 61", len(r))
-	}
-	discovery, err := NewEngine(r).Discover("")
-	if err != nil || len(discovery) > 32768 {
-		t.Fatalf("discovery bytes=%d: %v", len(discovery), err)
-	}
-	var catalog struct{ Actions []json.RawMessage }
-	if err := json.Unmarshal([]byte(discovery), &catalog); err != nil || len(catalog.Actions) != len(r) {
-		t.Fatalf("invalid discovery: %v, action count=%d", err, len(catalog.Actions))
-	}
+	return a
 }
 
 func TestRequestedAWSReadsAreRegisteredWithTypedInputs(t *testing.T) {
-	r := AWSRegistry(aws.Config{Region: "us-west-1"})
+	r := NewServiceSet(aws.Config{Region: "us-west-1"})
 	cases := []struct{ name, input string }{
 		{"sts.GetCallerIdentity", `{}`},
 		{"iam.ListUsers", `{}`},
@@ -55,22 +33,22 @@ func TestRequestedAWSReadsAreRegisteredWithTypedInputs(t *testing.T) {
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			a, err := r.Find(tc.name)
+			a, err := r.Resolve(tc.name)
 			if err != nil || a.Write || a.Validate(json.RawMessage(tc.input)) != nil {
 				t.Fatalf("invalid read binding: %v", err)
 			}
 		})
 	}
-	if err := r["cloudwatch.GetMetricStatistics"].Validate(json.RawMessage(`{}`)); err == nil {
+	if err := mustResolve(t, r, "cloudwatch.GetMetricStatistics").Validate(json.RawMessage(`{}`)); err == nil {
 		t.Fatal("missing metric request fields were accepted")
 	}
-	if err := r["iam.ListUsers"].Validate(json.RawMessage(`{"DeleteUser":true}`)); err == nil {
+	if err := mustResolve(t, r, "iam.ListUsers").Validate(json.RawMessage(`{"DeleteUser":true}`)); err == nil {
 		t.Fatal("unknown parameter was accepted")
 	}
 }
 
 func TestNewProjectionsRetainUsefulFieldsWithoutSDKMetadata(t *testing.T) {
-	r := AWSRegistry(aws.Config{Region: "us-west-1"})
+	r := NewServiceSet(aws.Config{Region: "us-west-1"})
 	cases := []struct{ name, raw, want string }{
 		{"sts.GetCallerIdentity", `{"Account":"123456789012","Arn":"arn:aws:sts::123456789012:assumed-role/ops/me","ResultMetadata":{"RequestId":"irrelevant"}}`, "123456789012"},
 		{"iam.ListUsers", `{"Users":[{"UserName":"alice","Arn":"arn:aws:iam::123456789012:user/alice","Path":"/"}],"ResultMetadata":{"RequestId":"irrelevant"}}`, "alice"},
@@ -85,7 +63,7 @@ func TestNewProjectionsRetainUsefulFieldsWithoutSDKMetadata(t *testing.T) {
 			if err := json.Unmarshal([]byte(tc.raw), &raw); err != nil {
 				t.Fatal(err)
 			}
-			projected, err := r[tc.name].expression.Search(raw)
+			projected, err := mustResolve(t, r, tc.name).expression.Search(raw)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -98,7 +76,7 @@ func TestNewProjectionsRetainUsefulFieldsWithoutSDKMetadata(t *testing.T) {
 }
 
 func TestNewActionsExposeCorrectNextPageParameter(t *testing.T) {
-	r := AWSRegistry(aws.Config{Region: "us-west-1"})
+	r := NewServiceSet(aws.Config{Region: "us-west-1"})
 	cases := []struct{ name, output, input string }{
 		{"iam.ListUsers", "Marker", "Marker"},
 		{"rds.DescribeDBInstances", "Marker", "Marker"},
@@ -108,7 +86,7 @@ func TestNewActionsExposeCorrectNextPageParameter(t *testing.T) {
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			a := *r[tc.name]
+			a := *mustResolve(t, r, tc.name)
 			if a.TokenOut != tc.output || a.TokenIn != tc.input {
 				t.Fatalf("pagination mapping %s → %s", a.TokenOut, a.TokenIn)
 			}
@@ -151,7 +129,7 @@ func TestNewSDKClientsUseSignedReadRequests(t *testing.T) {
 				}
 				return &http.Response{StatusCode: 200, Header: http.Header{"Content-Type": []string{"text/xml"}}, Body: io.NopCloser(strings.NewReader(tc.response))}, nil
 			})}}
-			out, err := NewEngine(AWSRegistry(cfg)).Query(context.Background(), "s", Query{Action: tc.name, Params: json.RawMessage(tc.input)})
+			out, err := NewAWSEngine(cfg).Query(context.Background(), "s", Query{Action: tc.name, Params: json.RawMessage(tc.input)})
 			if err != nil || !called || !strings.Contains(out, tc.want) {
 				t.Fatalf("output %q, called=%v, err=%v", out, called, err)
 			}

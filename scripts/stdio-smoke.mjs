@@ -38,10 +38,12 @@ try {
   assert.equal(init.serverInfo.name, 'aws-mcp-turbo');
   child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
   const tools = await call('tools/list', {});
-  assert.deepEqual(tools.tools.map(t => t.name).sort(), ['aws_diagnose', 'aws_discover', 'aws_mutate', 'aws_query']);
+  assert.deepEqual(tools.tools.map(t => t.name).sort(), ['aws_discover', 'aws_mutate', 'aws_query']);
   const discovery = await call('tools/call', { name: 'aws_discover', arguments: { search: 'ec2.DescribeInstances' } });
   assert.ok(discovery.content[0].text.includes('InstanceIds'));
-  assert.ok(discovery.structuredContent.actions.some(action => action.action === 'ec2.DescribeInstances'));
+  assert.equal(discovery.structuredContent.action, 'ec2.DescribeInstances');
+  const search = await call('tools/call', { name: 'aws_discover', arguments: { search: 'lambda list' } });
+  assert.ok(search.structuredContent.actions.some(action => action.action === 'lambda.ListFunctions'));
   const mutation = await call('tools/call', { name: 'aws_mutate', arguments: { action: 'ec2.StopInstances', intent: 'smoke', execute: true } });
   assert.equal(mutation.isError, true);
   assert.match(mutation.content[0].text, /disabled/);

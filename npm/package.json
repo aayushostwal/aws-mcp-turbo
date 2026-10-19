@@ -1,7 +1,7 @@
 {
   "name": "@ostwal/aws-mcp-turbo",
-  "version": "0.1.4",
-  "description": "Native, token-conscious AWS MCP server with projections and delta log polling",
+  "version": "0.2.0",
+  "description": "Native, token-efficient AWS MCP server: 76 services, compact output, batching and recipes",
   "type": "module",
   "bin": { "aws-mcp-turbo": "bin/aws-mcp-turbo.mjs" },
   "files": ["bin/", "README.md", "LICENSE"],

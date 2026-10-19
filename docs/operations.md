@@ -51,7 +51,7 @@ failure or process crash must be resolved by inspecting AWS state, not blindly r
 - Use a dedicated AWS sandbox role for live read/pagination and log-tail tests.
 - Verify multiple equal-timestamp log events and a quiet stream followed by new data.
 - Verify SSO refresh and intended role assumption in your actual environment.
-- Connect the supported Claude Desktop and Cursor versions; verify four tools and clean stdout.
+- Connect the supported Claude Desktop and Cursor versions; verify three tools and clean stdout.
 - Test mutations only against disposable resources with a real human approval hook.
 - Record the platform, binary version, AWS region, latency distribution, and payload sizes.
 - Verify published checksums/attestations and npm/Homebrew installs before announcing support.

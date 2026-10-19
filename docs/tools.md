@@ -1,130 +1,133 @@
 # Tool reference
 
-All results include a single MCP text content block. Discovery also includes the same compact
-catalog in `structuredContent` for clients that consume structured tool output. Errors set
-`isError:true`. Raw SDK responses are never duplicated in `structuredContent`. Default result limit is 32 KiB;
-requests larger than 64 KiB are rejected by the handler. Transport parsing happens before
-that handler limit, so this is intended for a trusted local client, not a public server.
+Every result is a single MCP text block. `aws_discover` also returns the same data as
+`structuredContent`. Errors set `isError:true`. Default result limit is 32 KiB; requests larger
+than 64 KiB are rejected. The server is meant for a trusted local client, not as a public service.
 
-## Discovery
+## aws_discover
 
-`aws_discover({"search":""})` returns the compact action/preset catalog and macro descriptions.
-Search is a case-insensitive substring. An **exact, case-sensitive action name**, for example
-`lambda.GetFunctionConfiguration`, also returns accepted SDK parameter fields and Go types.
-Nested parameter structure follows the corresponding AWS SDK Go input type.
-Required fields are listed separately; the AWS SDK/service performs additional validation.
+`{"search":""}` lists the services. `{"search":"lambda list"}` lists actions whose names contain
+every word (case-insensitive), reads first and writes marked `"write":true`, up to 60 at a time with
+the total count. A bare service name such as `ec2` lists that service. Add words to narrow.
 
-## Queries and projections
+An **exact, case-sensitive action name** such as `lambda.GetFunctionConfiguration` returns:
 
-Arguments: `action` (required), `params` (object, default `{}`), `projection` (JMESPath override),
-`format` (`markdown`, `tsv`, or `json`; default Markdown for lists, compact JSON otherwise),
-and optional `region` or `regions`. `region` overrides the server's default for one query;
-`regions` runs the same read in up to eight unique regions with four concurrent requests.
-These two fields cannot be combined. Fan-out results are labeled and remain in request order;
-partial regional errors are shown with `partial=true`, while all failures return a tool error.
+- `parameters`: accepted input fields and their Go types (`Filters` is a list of `types.Filter`);
+- `returns`: the top-level fields of the response, useful for writing `fields`;
+- `default_projection`: what you get without `fields` or `projection`;
+- `required`: fields checked locally before the call (AWS validates the rest);
+- `write`: whether the action changes state.
 
-Action names are `service.Operation` and case-sensitive. Parameters use **Go SDK field names**:
-`FunctionName`, `LogGroupName`, `InstanceIds`, `Filters`, etc. They are not CLI kebab-case names
-or CloudWatch wire JSON names. Unknown fields, wrong types, and missing required fields fail.
-Only registered read actions are accepted, even if an unregistered action starts with `Get`.
+It also lists matching recipes under `macros`.
 
-JMESPath operates on JSON-normalized SDK output, retaining PascalCase field names. Presets are
-compiled once. Overrides compile before contacting AWS and are still pruned and size-limited.
-`projection:"@"` is allowed for a small full response but still removes SDK metadata and empty
-containers. A projection is data selection, not a security/redaction boundary.
+## aws_query
 
-Pruning removes `null`, `[]`, and `{}` recursively. It keeps `false`, numeric zero, and `""`.
-Completely empty results render as `No results.` (including `format:"json"`). Tables have a
-sorted union of columns; nested values use compact JSON. TSV and Markdown cells escape
-tabs/newlines/backslashes; Markdown also escapes pipes. The format is for model consumption,
-not spreadsheet import. Object roots stay compact JSON in every format.
+Provide exactly one of `action`, `queries` or `macro`.
 
-## Pagination
-
-Each region in a query issues one API call (plus SDK retries). A returned continuation cursor is appended
-as `next_params={...}`, outside the projection, so it cannot be accidentally projected away.
-Merge those fields into the same input parameters and call again, keeping the same region.
-`format:"json"` selects the
-body format; the complete text result may include the pagination trailer and is not always
-a single JSON document. Empty pages may still contain a continuation cursor.
-
-| Actions | Output token → next input parameter |
+| Argument | Meaning |
 | --- | --- |
-| EC2 describes, `ecs.ListTasks`, `logs.FilterLogEvents` | `NextToken` → `NextToken` |
-| `s3.ListBuckets` | `ContinuationToken` → `ContinuationToken` |
-| `s3.ListObjectsV2` | `NextContinuationToken` → `ContinuationToken` |
-| `lambda.ListFunctions` | `NextMarker` → `Marker` |
-| `logs.GetLogEvents` with explicit token | `NextForwardToken` → `NextToken` |
-| IAM lists, RDS describes, ElastiCache describes | `Marker` → `Marker` |
-| ELBv2 describes, `route53.ListHostedZones`, `kms.ListKeys` | `NextMarker` → `Marker` |
-| `dynamodb.ListTables` | `LastEvaluatedTableName` → `ExclusiveStartTableName` |
-| `apigateway.GetRestApis` | `Position` → `Position` |
-| Most other new list/describe actions | `NextToken` → `NextToken` (when present) |
+| `action` | `service.Operation`, case-sensitive. Reads only; writes use `aws_mutate`. |
+| `params` | Input object using exact Go SDK field names (`FunctionName`, `InstanceIds`, `Filters`). Unknown names, wrong types and missing required fields fail. |
+| `fields` | Comma-separated names to keep, e.g. `"InstanceId,State.Name"`. Applies to the response's main list or record. A dotted path is reached through nested records and its key is the last name. |
+| `projection` | A JMESPath expression for full control. Not combined with `fields`. |
+| `format` | `compact` (default), `markdown`, `tsv` or `json`. |
+| `group` | Name of a field in the result; returns how many rows have each value, most common first. Add that field to `fields`. |
+| `all` | Follow continuation tokens until the end, the output limit, or 25 pages. The result states `pages=N`. |
+| `region` / `regions` | One region for this call, or up to eight, run four at a time. Results are labeled and keep request order. Cannot be combined. |
+| `queries` | Up to eight single-action queries run in parallel. Each result is labeled `### 1 service.Operation`. A failed query does not hide the others; the output ends with `partial=true`. Each query gets an equal share of the output limit. |
+| `macro` + `params` | A recipe (below). |
 
-Use `aws_discover` to see the exact case-sensitive action names and accepted Go SDK input
-fields. For example, `cloudwatch.DescribeAlarms` is supported; `monitoring.DescribeAlarms`
-is not an alias. The new `cloudwatch.GetMetricStatistics` binding requires `Namespace`,
-`MetricName`, `StartTime`, `EndTime`, and `Period`; AWS also expects `Statistics` or
-`ExtendedStatistics`. `secretsmanager.DescribeSecret` returns metadata, not secret values.
+### Output format
 
-The server does not silently truncate rows or fetch an unbounded number of pages.
-An oversized response fails with guidance to reduce `MaxResults`, `MaxKeys`, `Limit`, filters,
-or projection. The output byte ceiling is a bound, not a fixed token budget.
+The default `compact` format is built for models, not spreadsheets:
+
+- A list of records becomes a header row and tab-separated rows.
+- Columns where every row (at least three) has the same value are printed once on an `all:` line.
+- Columns whose values share a prefix ending in `:` or `/` (typically an ARN) print the prefix once on a
+  `prefix:` line; add it back to each value.
+- ISO timestamps in UTC lose seconds: `2026-10-11 09:41Z`.
+- A single record becomes `Key=value` lines; nested values stay as compact JSON.
+- Identifying columns (`Id`, `Name`, `Arn`) come first, `Count` last, the rest alphabetically.
+- `null`, `[]` and `{}` are removed, while `false`, `0` and `""` are kept. SDK metadata is removed.
+- An empty result prints `No results.`
+
+`markdown` and `tsv` give plain tables; `json` gives compact JSON. A projection selects data. It is not
+a redaction boundary.
+
+### Limits and truncation
+
+A result that does not fit the output limit is cut to the rows that fit, with
+`truncated: S of T rows; narrow params, use fields, or group`. Only if not even one row fits does the
+call fail. Log polling never truncates, because dropped events could not be recovered.
+
+### Pagination
+
+By default one AWS page is returned. A continuation appears as `next_params={...}`: merge it into
+`params` and call again, keeping the same region. With `all:true` the server does this for you.
+The tokens come from the SDK types, so every paginated operation works, including DynamoDB's
+`LastEvaluatedKey`, which is returned in request form so it can be passed back unchanged.
+
+### Caching
+
+A repeated identical read inside 15 seconds is answered from memory (up to 128 entries). Any
+executed mutation clears it. Log polling is never cached this way.
+
+### DynamoDB items
+
+Items are returned as plain values (`{"pk":"user#1","age":"41"}`; numbers stay strings, as DynamoDB
+sends them). Inputs that hold attribute values use DynamoDB's own JSON:
+`"ExpressionAttributeValues":{":p":{"S":"user#1"},":n":{"N":"5"}}`. A bare JSON number is accepted for `N`.
+Types: `S N B BOOL NULL L M SS NS BS`.
+
+### Errors
+
+AWS failures show the error code and message, `UnauthorizedOperation: You are not authorized...`,
+without SDK request details. Expired credentials say so and suggest `aws sso login`.
 
 ## Delta log polling
 
-Without an explicit `NextToken`, `logs.GetLogEvents` maintains an in-memory cursor keyed by
-the actual MCP session, effective region, and canonical query parameters. Default `Limit` is 200 and default
-`StartFromHead` is true. Choose `StartTime` to avoid reading the full history. Subsequent
-identical calls advance using the AWS forward token with `StartFromHead:true`.
+Without an explicit `NextToken`, `logs.GetLogEvents` keeps an in-memory cursor per MCP session,
+effective region and exact parameters. Default `Limit` is 200 and `StartFromHead` is true. Choose
+`StartTime` to avoid reading the whole history. Repeating the same call returns only newer events.
 
-Forward cursors preserve distinct equal-timestamp events and AWS pagination ordering.
-Timestamp-only filtering would lose valid events, so timestamps are recorded for checkpoints
-but never used to discard rows. There is no content-based deduplication. Delivery follows
-AWS's cursor behavior and is not an exactly-once guarantee.
+Forward tokens preserve distinct events with equal timestamps. There is no content deduplication
+and no exactly-once promise.
 
-- Cache: at most 256 session/query streams; 16 cursor checkpoints per stream.
-- Inactive streams expire after 30 minutes; least recently used entries are evicted at capacity.
-- Tokens are discarded after 23 hours to stay below AWS's 24-hour validity window.
-- Restart, eviction, or expiration replays from the original input range. No durable state.
-- Same-stream concurrent calls serialize; other streams can progress independently, except
-  occasional shared lock-stripe contention.
-- API, projection, or formatting failures do not advance the cursor. Successful formatting
-  advances it before transport delivery; a disconnected client can miss an already-committed page.
-- Changing projection/format does not reset the cursor. Changing parameters creates a new stream.
-- Supplying `NextToken` bypasses the cache; set `StartFromHead:true` for a forward token.
-- The cache cannot be reset by another session. To reread, change `StartTime` or start a new session.
+- At most 256 streams, 16 checkpoints each; inactive streams expire after 30 minutes.
+- Tokens are dropped after 23 hours, inside AWS's 24-hour validity window.
+- A restart, eviction or expiry replays from the original range. Nothing is stored on disk.
+- Failures in the API, projection or formatting do not advance the cursor.
+- Supplying `NextToken` bypasses the cursor. A new session starts fresh.
 
 See [AWS GetLogEvents semantics](https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogEvents.html).
 
-## Diagnostic macros
+## Recipes
 
-`aws_diagnose` accepts `macro` and `params`. Macros gather evidence under one overall deadline.
-They are deterministic workflows; they do not assert a definitive root cause from incomplete data.
+Run with `{"macro":"name","params":{...}}`. A recipe runs its reads in parallel under one deadline and
+labels each section. They gather evidence; they do not claim a root cause. `aws_discover` lists them.
 
-### ecs_task_stopped
+| Recipe | Parameters | Returns |
+| --- | --- | --- |
+| `ecs_task_stopped` | `Cluster`; optional `Tasks` (up to 100) | Stop reasons, container exit codes and failures. Without `Tasks`, one page of stopped tasks is listed first and further pages are named. |
+| `lambda_timeout` | `FunctionName`; optional `LogGroupName`, `StartTime` (epoch ms) | Configuration and up to 100 recent timeout log lines. The log group is derived from the name or ARN; custom log groups need `LogGroupName`. No matches is not proof of health. |
+| `lambda_errors` | `FunctionName` | Configuration and, for the last hour, invocations, errors, throttles and duration. |
+| `ec2_instance` | `InstanceId` | Instance details, status checks with scheduled events, CPU for the last hour. |
+| `rds_status` | `DBInstanceIdentifier` | Instance state, CPU and connections for the last hour, events for the last day. |
+| `ecs_service_status` | `Cluster`, `Service` | Counts, deployment rollout state, latest service events. |
+| `alb_target_health` | `TargetGroupArn` | Each target's health with the reason. |
+| `cost_by_service` | none | Unblended cost per service, last 30 days (Cost Explorer). |
+| `cloudtrail_recent` | optional `Username` | API activity from the last hour. |
 
-`Cluster` is required; optional `Tasks` is an array of up to 100 task ARNs/IDs. Without `Tasks`,
-the macro lists one page of stopped tasks, then describes them. Output retains AWS stop reasons,
-container exit codes/reasons, and `Failures`. Additional list pages are explicitly identified
-with continuation arguments. An empty first page does not prove there are no stopped tasks.
+Recipes are data in `internal/turbo/recipes.go`: a list of reads with `$Param` placeholders and relative
+times (`@now-1h`). Adding one is a table entry and a test.
 
-### lambda_timeout
+## aws_mutate
 
-`FunctionName` is required; optional `LogGroupName` overrides `/aws/lambda/<function-name>`.
-`StartTime` is an optional epoch-millisecond timestamp (default: one hour ago). Function ARNs
-and qualifiers are handled when deriving the default log group.
+Arguments: `action`, `params`, a nonblank `intent`, optional `region` and optional `execute` (default false).
+Calls fail unless the server was started with `--enable-mutations`. A preview validates the input
+locally and writes an audit record without calling AWS. Execution also needs the approval hook to approve
+the exact request. See [SECURITY.md](../SECURITY.md).
 
-Configuration and one page of up to 100 matching log events are fetched concurrently. The filter
-matches both `Task timed out` and `Status: timeout`. Functions using custom log groups must supply
-`LogGroupName`. Custom JSON log structures and future runtime messages may require a separate
-query. Partial permission/API failures are labeled `Unavailable`; both sources failing returns
-a tool error. No matches is not proof that the function is healthy.
-
-## Mutations
-
-Arguments: `action`, `params`, nonblank `intent`, and optional `execute` (default false).
-All calls are rejected unless enabled in server configuration. Enabled previews validate local
-input types/required fields and audit the request, without calling AWS. Execution additionally
-requires approval from the configured hook. Only the three registered write actions are accepted.
-See [SECURITY.md](../SECURITY.md) for the complete contract and operational caveats.
+Any SDK operation that is not a read can be previewed or approved this way, except the operations that
+return credentials or key material, which are not callable at all (`sts.AssumeRole`, `iam.CreateAccessKey`,
+`kms.Decrypt`, `secretsmanager.GetSecretValue`, and similar).

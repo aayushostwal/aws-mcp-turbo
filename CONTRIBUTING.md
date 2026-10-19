@@ -12,17 +12,22 @@ node scripts/stdio-smoke.mjs
 make bench
 ```
 
-For a new action:
+Actions come from the AWS SDK clients, so most changes are not new actions:
 
-1. Add a typed SDK binding in `internal/turbo/aws.go` and explicitly classify read vs write.
-2. Supply a compiled projection that preserves useful operational evidence, required fields,
-   and pagination token mappings. Do not remove security rules or errors to inflate savings.
-3. Test input validation, projected output, pagination and failures with fixtures or a fake
-   HTTP transport. Include write-gate tests for mutations.
-4. Update discovery behavior as needed, supported-action docs, and the example IAM policy.
-5. Add realistic sanitized fixtures to token measurements and report the impact honestly.
+- **A new service:** add one line to `internal/turbo/services.go` (and `go get` the SDK module).
+  `TestEveryOperationHasUsableDefaults` checks that every operation gets a valid default view.
+- **A better default for one action:** add an entry to `internal/turbo/presets.go` with a projection that
+  keeps useful operational evidence, required fields, and a `Root` when `fields` should apply somewhere
+  other than the default. `TestPresetsPointAtRealOperations` checks it against the SDK types.
+- **A secret-bearing operation or flag:** extend the deny list or `guardedFlags` in `dynamic.go`, with a test.
+- **A recipe:** add an entry to `internal/turbo/recipes.go`; `TestEveryRecipeActionExistsWithItsParameters`
+  checks every step against the SDK.
 
-Keep the exposed tool count at four and measured definitions below 500 tokens. Avoid additional
+Test input validation, output, pagination and failures with fixtures or a fake HTTP transport
+(see `features_test.go`). Add realistic sanitized fixtures to token measurements and report the
+impact honestly, and do not remove security rules or errors to inflate savings.
+
+Keep the exposed tool count at three and measured definitions below 500 tokens. Avoid additional
 protocol output, raw SDK dumps, implicit profile switching, and unbounded page aggregation.
 Comments should explain non-obvious constraints, especially cursor and approval semantics.
 

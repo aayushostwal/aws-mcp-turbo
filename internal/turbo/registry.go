@@ -6,9 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"reflect"
-	"sort"
-	"strings"
 
 	"github.com/jmespath/go-jmespath"
 )
@@ -24,6 +21,7 @@ type Action struct {
 	TokenIn    string                                              `json:"-"`
 	Validate   func(json.RawMessage) error                         `json:"-"`
 	Call       func(context.Context, json.RawMessage) (any, error) `json:"-"`
+	root       string                                              // JMESPath prefix that field selection applies to
 	expression *jmespath.JMESPath
 }
 
@@ -35,17 +33,6 @@ func (r Registry) Find(name string) (*Action, error) {
 		return nil, fmt.Errorf("unsupported action %q; use aws_discover", name)
 	}
 	return a, nil
-}
-
-func (r Registry) Discover(search string) []*Action {
-	var found []*Action
-	for _, a := range r {
-		if strings.Contains(strings.ToLower(a.Name), strings.ToLower(search)) {
-			found = append(found, a)
-		}
-	}
-	sort.Slice(found, func(i, j int) bool { return found[i].Name < found[j].Name })
-	return found
 }
 
 func decode(data []byte, target any) error {
@@ -69,64 +56,4 @@ func parameters(raw json.RawMessage) (map[string]any, error) {
 		return nil, fmt.Errorf("params must be an object")
 	}
 	return p, nil
-}
-
-// bind preserves SDK validation and wire encoding while accepting AWS Go field names.
-func bind[I, O, Opt any](r Registry, a Action, fn func(context.Context, *I, ...func(*Opt)) (*O, error)) {
-	a.expression = jmespath.MustCompile(a.Projection)
-	a.Parameters = map[string]string{}
-	t := reflect.TypeFor[I]()
-	for i := 0; i < t.NumField(); i++ {
-		f := t.Field(i)
-		if f.IsExported() {
-			a.Parameters[f.Name] = f.Type.String()
-		}
-	}
-	parse := func(raw json.RawMessage) (*I, error) {
-		p, err := parameters(raw)
-		if err != nil {
-			return nil, err
-		}
-		// encoding/json matches fields case-insensitively. Reject aliases so cache
-		// keys, approval payloads and the SDK always refer to the same fields.
-		for key := range p {
-			if _, ok := a.Parameters[key]; !ok {
-				return nil, fmt.Errorf("unknown parameter %q (field names are case-sensitive)", key)
-			}
-		}
-		for _, key := range a.Required {
-			v, ok := p[key]
-			if !ok || v == nil || v == "" {
-				return nil, fmt.Errorf("missing required parameter %s", key)
-			}
-			if arr, ok := v.([]any); ok && len(arr) == 0 {
-				return nil, fmt.Errorf("%s must not be empty", key)
-			}
-		}
-		b, _ := json.Marshal(p)
-		var in I
-		if err := decode(b, &in); err != nil {
-			return nil, fmt.Errorf("invalid AWS parameters: %w", err)
-		}
-		return &in, nil
-	}
-	a.Validate = func(raw json.RawMessage) error { _, err := parse(raw); return err }
-	a.Call = func(ctx context.Context, raw json.RawMessage) (any, error) {
-		in, err := parse(raw)
-		if err != nil {
-			return nil, err
-		}
-		out, err := fn(ctx, in)
-		if err != nil {
-			return nil, err
-		}
-		b, err := json.Marshal(out)
-		if err != nil {
-			return nil, err
-		}
-		var normalized any
-		err = json.Unmarshal(b, &normalized)
-		return normalized, err
-	}
-	r[a.Name] = &a
 }
