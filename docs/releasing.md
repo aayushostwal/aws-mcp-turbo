@@ -38,6 +38,14 @@ On GitHub, protect `main` with required CI/review and restrict creation/update/d
 tags to release maintainers. Tags authorize public publication; treat tag creation as a release
 approval. These are repository-owner settings, not changes this workflow can enforce.
 
+## Cut a release with the script
+
+`scripts/publish-release.sh X.Y.Z` runs the steps below in one go, from an up-to-date `main`
+with Node 22 or newer. It checks the repository, the package version and the release notes, makes
+sure npm trusted publishing is configured (logging in and configuring it if not), asks you to type
+the version, then pushes the tag, watches the Release workflow and verifies the result.
+`--setup-only` configures npm without tagging. The manual steps follow for reference.
+
 ## Cut a release
 
 1. Open a PR updating `npm/package.json`, installation examples, `CHANGELOG.md`, and
