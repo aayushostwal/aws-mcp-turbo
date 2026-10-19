@@ -55,7 +55,7 @@ already shown. They depend on the workload.
 
 ## Comparing with another server
 
-`scripts/bench-compare.mjs` runs the same twelve questions from `bench/tasks.json` against this
+`scripts/bench-compare.mjs` runs the ten questions from `bench/tasks.json` (see [comparison.md](comparison.md)) against this
 server and another one over stdio, using your AWS credentials (every task is a read). For the
 official AWS MCP Server, launch its proxy as the other server:
 
@@ -63,7 +63,7 @@ official AWS MCP Server, launch its proxy as the other server:
 node scripts/bench-compare.mjs --turbo ./bin/aws-mcp-turbo \
   --other "uvx mcp-proxy-for-aws-cli@latest https://aws-mcp.us-east-1.api.aws/mcp --metadata AWS_REGION=us-west-2" \
   --var REGION_A=us-east-1 --var REGION_B=us-west-2 --var REGION_C=eu-west-1 \
-  --var FUNCTION=my-function --var CLUSTER=my-cluster --out bench/results.json
+  --var FUNCTION=my-function --var CLUSTER=my-cluster --var LOG_GROUP=my-log-group --out bench/results.json
 .venv/bin/python scripts/token_metrics.py --compare bench/results.json
 ```
 

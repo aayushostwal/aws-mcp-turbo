@@ -186,7 +186,7 @@ The release binary is about 190 MB because it contains 76 AWS service clients; r
 a gzip copy (about 40 MB) that the npm launcher downloads.
 
 - [Architecture and design decisions](docs/architecture.md)
-- [Benchmarks and how to compare with another server](docs/benchmarks.md)
+- [Benchmarks](docs/benchmarks.md) and [ten read-only questions to compare with another server](docs/comparison.md)
 - [Operational troubleshooting](docs/operations.md)
 - [Maintainer release procedure](docs/releasing.md)
 - [Contribution guide](CONTRIBUTING.md), [security policy](SECURITY.md), [changelog](CHANGELOG.md)

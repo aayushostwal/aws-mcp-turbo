@@ -12,16 +12,23 @@ import { readFile, writeFile } from 'node:fs/promises';
 const args = process.argv.slice(2);
 const opt = (name, fallback) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : fallback; };
 const vars = Object.fromEntries(args.flatMap((a, i) => a === '--var' ? [args[i + 1].split(/=(.*)/s).slice(0, 2)] : []));
+vars.START_MS ??= String(Date.now() - 3600_000);
+vars.START_ISO ??= new Date(Date.now() - 24 * 3600_000).toISOString().replace(/\.\d+Z$/, 'Z');
 const turboCmd = (opt('--turbo', './bin/aws-mcp-turbo')).split(' ');
 const otherCmd = opt('--other') ? opt('--other').split(' ') : null;
 const out = opt('--out', 'bench/results.json');
 const tasks = JSON.parse(await readFile(new URL('../bench/tasks.json', import.meta.url), 'utf8')).tasks;
 
 function fill(value) {
+  // "{{#NAME}}" in quotes becomes a bare number; "{{NAME}}" stays text.
   const text = JSON.stringify(value);
-  const missing = [...text.matchAll(/\{\{(\w+)\}\}/g)].map(m => m[1]).filter(k => !(k in vars));
+  const missing = [...text.matchAll(/\{\{#?(\w+)\}\}/g)].map(m => m[1]).filter(k => !(k in vars));
   if (missing.length) return { missing };
-  return { value: JSON.parse(text.replace(/\{\{(\w+)\}\}/g, (_, k) => JSON.stringify(vars[k]).slice(1, -1))) };
+  const numeric = text.replace(/"\{\{#(\w+)\}\}"/g, (_, k) => {
+    if (!/^-?\d+$/.test(vars[k])) throw new Error(`${k} must be an integer`);
+    return vars[k];
+  });
+  return { value: JSON.parse(numeric.replace(/\{\{(\w+)\}\}/g, (_, k) => JSON.stringify(vars[k]).slice(1, -1))) };
 }
 
 async function connect(command) {
